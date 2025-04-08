@@ -1,36 +1,22 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+![nextchat-thumbnail](https://github.com/user-attachments/assets/42068054-fc9e-4a3b-96f3-fa395947dc80)
+# Bem vindo ao NextChat 👋
 
-## Getting Started
+Este projeto é uma aplicação de chat em tempo real com suporte a grupos, desenvolvida com Next.js e TypeScript. O objetivo é oferecer uma experiência fluida, moderna e responsiva para comunicação instantânea entre múltiplos usuários, com foco em desempenho, segurança e escalabilidade.
 
-First, run the development server:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## ⚙️ Tech Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- [Figma](https://www.figma.com/design/WfFN4XV35CfTXFjdrx9MMd/NextChat?node-id=1-2&t=5AzFnGNf3w2G7hud-1) (Link para o Arquivo de Design)
+- [Next.js](https://nextjs.org/)
+- [Typescript](https://www.typescriptlang.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Vercel](https://vercel.com/) (Deploy)
+- [Aceternity](https://ui.aceternity.com/)
+- [Sentry](https://sentry.io/)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+## 💡 Inspiração
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [Realtime Chat App](https://vercel.com/templates/next.js/realtime-chat-app)
