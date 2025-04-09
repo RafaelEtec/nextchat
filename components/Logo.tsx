@@ -11,7 +11,7 @@ const Logo = () => {
       <motion.span
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="font-semibold whitespace-pre text-my-blue"
+        className="font-normal font-bebas-neue whitespace-pre text-my-blue text-3xl"
       >
         NextChat
       </motion.span>

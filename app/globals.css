@@ -1,4 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Underdog&display=swap');
+
 @import "tailwindcss";
+
 
 @theme {
   /* My Pallete */
@@ -25,6 +28,10 @@
   --color-google-grey: #9AA0A6;
   --color-google-lg-grey: #F1F3F4;
   --color-google-black: #202124;
+
+  /* Google Fonts */
+  --font-bebas-neue: "Bebas Neue", sans-serif;
+  --font-underdog: "Underdog", system-ui;
 }
 
 @media (prefers-color-scheme: dark) {
