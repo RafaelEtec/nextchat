@@ -32,10 +32,10 @@ export default function Home() {
                 {/* TODO: SHOW GROUPS */}
               </div>
             </div>
-            <div className="flex flex-row overflow-x-hidden overflow-y-auto">
+            <div className="flex flex-row justify-between overflow-x-hidden overflow-y-auto">
               {open && session &&
                 <SidebarLink
-                  className="font-normal"
+                  className=""
                   link={{
                     label: `${session?.user?.name || ""}`,
                     href: "#",
