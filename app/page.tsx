@@ -1,15 +1,16 @@
 "use client";
 
 import Loading from "@/components/Loading";
+import LoadingGroups from "@/components/LoadingGroups";
 import Logo from "@/components/Logo";
 import LogoIcon from "@/components/LogoIcon";
 import Logout from "@/components/Logout";
 import Messages from "@/components/Messages";
+import SidebarFooter from "@/components/SidebarFooter";
 import SignIn from "@/components/SignIn";
-import { Sidebar, SidebarBody, SidebarLink } from "@/components/ui/sidebar";
+import { Sidebar, SidebarBody } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
 import { useSession } from "next-auth/react";
-import Image from "next/image";
 import { useState } from "react";
 
 export default function Home() {
@@ -25,34 +26,35 @@ export default function Home() {
         )}
       >
         <Sidebar open={open} setOpen={setOpen} animate={true}>
-          <SidebarBody className="justify-between gap-10">
-            <div className="flex flex-1 flex-col overflow-x-hidden overflow-y-auto">
+          <SidebarBody className="justify-between gap-4">
+            {/* Sidebar Header */}
+            <div className="flex flex-col items-center">
               {open ? <Logo /> : <LogoIcon />}
+            </div>
+            <div className="flex flex-1 flex-col overflow-x-hidden overflow-y-auto no-scrollbar">
               <div className="mt-8 flex flex-col gap-2">
-                {/* TODO: SHOW GROUPS */}
+                {/* Sidebar Content */}
+                {session ? (
+                  open ? <></> : <></>
+                  ) :
+                  <LoadingGroups open={open}/>
+                }
               </div>
             </div>
             <div className="flex flex-row justify-between overflow-x-hidden overflow-y-auto">
-              {open && session &&
-                <SidebarLink
-                  className=""
-                  link={{
-                    label: `${session?.user?.name || ""}`,
-                    href: "#",
-                    icon: (
-                      <Image
-                        src={session?.user?.image || 'null'}
-                        className="h-12 w-12 shrink-0 rounded-full"
-                        width={50}
-                        height={50}
-                        alt="Avatar"
-                      />
-                    ),
-                  }}
-                />
+              {/*  Sidebar Footer */}
+              {session ?
+                <>
+                  <SidebarFooter open={open} />
+                  {open && <Logout />}
+                </>
+                : (
+                  <div className="flex flex-col h-full w-full space-y-2">
+                    <SignIn provider={"github"} open={open}/>
+                    <SignIn provider={"google"} open={open}/>
+                  </div>
+                )
               }
-              {open && !session && <SignIn />}
-              {open && session && <Logout />}
             </div>
           </SidebarBody>
         </Sidebar>
