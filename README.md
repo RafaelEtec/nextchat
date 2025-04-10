@@ -20,3 +20,4 @@ Este projeto é uma aplicação de chat em tempo real com suporte a grupos, dese
 ## 💡 Inspiração
 
 - [Realtime Chat App](https://vercel.com/templates/next.js/realtime-chat-app)
+- [Discord](https://discord.com/)
