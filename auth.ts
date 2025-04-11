@@ -13,5 +13,5 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       clientId: config.env.google.clientId!,
       clientSecret: config.env.google.clientSecret!,
     }),
-  ],
+  ]
 })

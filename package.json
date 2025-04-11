@@ -9,8 +9,15 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@apollo/client": "^3.13.6",
+    "@apollo/subgraph": "^2.10.1",
     "@tabler/icons-react": "^3.31.0",
+    "apollo-server-micro": "^3.13.0",
     "clsx": "^2.1.1",
+    "grafbase": "^0.89.0",
+    "graphql": "^16.10.0",
+    "graphql-tag": "^2.12.6",
+    "graphql-yoga": "^5.13.3",
     "motion": "^12.6.3",
     "next": "15.2.4",
     "next-auth": "^5.0.0-beta.25",

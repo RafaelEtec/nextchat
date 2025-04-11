@@ -7,6 +7,7 @@ const SidebarFooter = ({
     open: boolean
 }) => {
     const {data: session} = useSession();
+    console.log(session?.user?.image)
 
     return (
             <SidebarLink
@@ -16,11 +17,11 @@ const SidebarFooter = ({
             href: "#",
                 icon: (
                     <img
-                    src={session?.user?.image || 'github.svg'}
-                    className="h-12 w-12 shrink-0 rounded-full"
-                    width={50}
-                    height={50}
-                    alt="Avatar"
+                        src={`${session?.user?.image}`}
+                        className="h-12 w-12 shrink-0 rounded-full"
+                        width={50}
+                        height={50}
+                        alt="Avatar"
                     />
                 ),
             }}
