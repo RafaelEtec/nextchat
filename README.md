@@ -13,7 +13,8 @@ Este projeto é uma aplicação de chat em tempo real com suporte a grupos, dese
 - [Tailwind CSS](https://tailwindcss.com/)
 - [Vercel](https://vercel.com/) (Deploy)
 - [Aceternity](https://ui.aceternity.com/)
-- [Sentry](https://sentry.io/)
+- [Neon PostgresSQL](https://neon.tech)
+- [Drizzle](https://orm.drizzle.team/)
 
 
 

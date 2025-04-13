@@ -7,7 +7,6 @@ const SidebarFooter = ({
     open: boolean
 }) => {
     const {data: session} = useSession();
-    console.log(session?.user?.image)
 
     return (
             <SidebarLink

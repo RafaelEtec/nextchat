@@ -11,6 +11,7 @@ const config = {
         next: {
             authSecret: process.env.AUTH_SECRET!,
         },
+        databaseUrl: process.env.DATABASE_URL!,
     },
 };
 
