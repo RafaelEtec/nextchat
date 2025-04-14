@@ -2,17 +2,14 @@ import { auth } from "@/auth";
 import type { Metadata } from "next";
 import { SessionProvider } from "next-auth/react";
 import "./globals.css";
+import { ReactNode } from "react";
 
 export const metadata: Metadata = {
   title: "NextChat",
   description: "Real Time Chat-App",
 };
 
-const RootLayout = async ({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) => {
+const RootLayout = async ({children}: {children: ReactNode}) => {
   const session = await auth();
 
   return (

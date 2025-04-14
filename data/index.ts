@@ -1,12 +1,12 @@
 export const sidebarLinks = [
     {
         label: "Amigos",
-        href: "#",
+        href: "/friends",
         icon: "users.svg",
     },
     {
         label: "Criar Grupo",
-        href: "#",
+        href: "/groups",
         icon: "chat.svg",
     },
     // {

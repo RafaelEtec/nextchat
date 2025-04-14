@@ -13,7 +13,7 @@ const SidebarFooter = ({
                 className="font-roboto"
                 link={{
                 label: `${open ? session?.user?.name : ""}`,
-                href: "#",
+                href: "/profile",
                 icon: (
                     <img
                         src={`${session?.user?.image}`}

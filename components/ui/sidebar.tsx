@@ -13,7 +13,7 @@ interface Links {
 
 interface SidebarContextProps {
   open: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpen: (value: boolean | ((prev: boolean) => boolean)) => void;
   animate: boolean;
 }
 
@@ -37,16 +37,23 @@ export const SidebarProvider = ({
 }: {
   children: React.ReactNode;
   open?: boolean;
-  setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpen?: (value: boolean | ((prev: boolean) => boolean)) => void;
   animate?: boolean;
 }) => {
   const [openState, setOpenState] = useState(false);
 
   const open = openProp !== undefined ? openProp : openState;
-  const setOpen = setOpenProp !== undefined ? setOpenProp : setOpenState;
+  const realSetOpen = (value: boolean | ((prev: boolean) => boolean)) => {
+    if (typeof value === 'function') {
+      const result = (value as (prev: boolean) => boolean)(openProp ?? openState);
+      (setOpenProp ?? setOpenState)(result);
+    } else {
+      (setOpenProp ?? setOpenState)(value);
+    }
+  };
 
   return (
-    <SidebarContext.Provider value={{ open, setOpen, animate: animate }}>
+    <SidebarContext.Provider value={{ open, setOpen: realSetOpen, animate: animate }}>
       {children}
     </SidebarContext.Provider>
   );
@@ -60,9 +67,15 @@ export const Sidebar = ({
 }: {
   children: React.ReactNode;
   open?: boolean;
-  setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpen?: (value: boolean | ((prev: boolean) => boolean)) => void;
   animate?: boolean;
 }) => {
+  const toggleOpen = () => {
+    if (setOpen) {
+      setOpen((prev) => !prev);
+    }
+  };
+
   return (
     <SidebarProvider open={open} setOpen={setOpen} animate={animate}>
       {children}
