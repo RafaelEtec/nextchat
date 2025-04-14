@@ -8,6 +8,7 @@ CREATE TABLE "relations_rooms" (
 --> statement-breakpoint
 CREATE TABLE "relations_users" (
 	"user_id" uuid NOT NULL,
+	"friend_id" uuid NOT NULL,
 	"friend_status" "friend_status" DEFAULT 'PENDING'
 );
 --> statement-breakpoint
@@ -32,4 +33,5 @@ CREATE TABLE "users" (
 --> statement-breakpoint
 ALTER TABLE "relations_rooms" ADD CONSTRAINT "relations_rooms_user_id_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "relations_rooms" ADD CONSTRAINT "relations_rooms_room_id_rooms_id_fk" FOREIGN KEY ("room_id") REFERENCES "public"."rooms"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE "relations_users" ADD CONSTRAINT "relations_users_user_id_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id") ON DELETE no action ON UPDATE no action;
+ALTER TABLE "relations_users" ADD CONSTRAINT "relations_users_user_id_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "relations_users" ADD CONSTRAINT "relations_users_friend_id_users_id_fk" FOREIGN KEY ("friend_id") REFERENCES "public"."users"("id") ON DELETE no action ON UPDATE no action;

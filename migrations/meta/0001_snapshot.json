@@ -1,6 +1,6 @@
 {
-  "id": "d7ce12bc-7ddb-453e-a6dc-61330e6f1d1e",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "80425839-c8ea-4e22-b4ef-f1c4e2277a04",
+  "prevId": "d7ce12bc-7ddb-453e-a6dc-61330e6f1d1e",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -170,15 +170,7 @@
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {
-        "rooms_id_unique": {
-          "name": "rooms_id_unique",
-          "nullsNotDistinct": false,
-          "columns": [
-            "id"
-          ]
-        }
-      },
+      "uniqueConstraints": {},
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
@@ -189,7 +181,7 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "text",
+          "type": "uuid",
           "primaryKey": true,
           "notNull": true
         },

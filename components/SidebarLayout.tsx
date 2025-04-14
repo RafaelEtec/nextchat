@@ -27,7 +27,7 @@ export default function SidebarLayout({
     <div className="flex h-full w-full">
       <div
         className={cn(
-          "mx-auto flex w-full flex-1 flex-col overflow-hidden rounded-md border border-none bg-my-background md:flex-row",
+          "mx-auto flex w-full flex-col overflow-hidden rounded-md border border-none bg-my-background md:flex-row",
           "h-screen"
         )}
       >
@@ -37,12 +37,15 @@ export default function SidebarLayout({
             <div className="flex flex-col items-center">
               {open ? <Logo /> : <LogoIcon />}
             </div>
-            <div className="flex flex-1 flex-col overflow-x-hidden overflow-y-auto no-scrollbar">
+            <div className="flex flex-1 flex-col overflow-x-hidden overflow-y-clip">
               <div className="mt-8 flex flex-col gap-2">
                 {/* Sidebar Content */}
                 {sidebarLinks.map((link) => (
                     <SidebarGroupLink key={link.href} link={link} isOpen={open} />
                 ))}
+              </div>
+              <div className="overflow-x-hidden overflow-y-auto no-scrollbar mt-4 p-2 border rounded-2xl border-my-background">
+                <LoadingGroups open={open} />
               </div>
             </div>
             <div className="flex flex-row justify-between overflow-x-hidden overflow-y-auto">
@@ -52,7 +55,9 @@ export default function SidebarLayout({
             </div>
           </SidebarBody>
         </Sidebar>
-        {children}
+        <div className="flex-1 overflow-y-auto">
+          {children}
+        </div>
       </div>
     </div>
   );

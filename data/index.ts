@@ -5,7 +5,7 @@ export const sidebarLinks = [
         icon: "users.svg",
     },
     {
-        label: "Criar Grupo",
+        label: "Grupos",
         href: "/groups",
         icon: "chat.svg",
     },

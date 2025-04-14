@@ -9,7 +9,9 @@
     "lint": "next lint",
     "db:generate": "npx drizzle-kit generate",
     "db:migrate": "npx drizzle-kit migrate",
-    "db:studio": "npx drizzle-kit studio"
+    "db:studio": "npx drizzle-kit studio",
+    "db:push": "npx drizzle-kit push",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s"
   },
   "dependencies": {
     "@apollo/client": "^3.13.6",
@@ -17,6 +19,7 @@
     "@auth/drizzle-adapter": "^1.8.0",
     "@neondatabase/serverless": "^1.0.0",
     "@tabler/icons-react": "^3.31.0",
+    "@tailwindcss/typography": "^0.5.16",
     "apollo-server-micro": "^3.13.0",
     "clsx": "^2.1.1",
     "dotenv": "^16.5.0",
@@ -32,6 +35,8 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.5.0",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1",
     "tailwind-merge": "^3.2.0",
     "tailwind-scrollbar-hide": "^2.0.0",
     "zustand": "^5.0.3"
@@ -43,6 +48,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/ws": "^8.18.1",
+    "conventional-changelog-cli": "^5.0.0",
     "drizzle-kit": "^0.30.6",
     "eslint": "^9",
     "eslint-config-next": "15.2.4",

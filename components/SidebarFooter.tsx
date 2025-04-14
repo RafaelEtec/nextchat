@@ -9,9 +9,9 @@ const SidebarFooter = ({
     const {data: session} = useSession();
 
     return (
-            <SidebarLink
-                className="font-roboto"
-                link={{
+        <SidebarLink
+            className="font-roboto"
+            link={{
                 label: `${open ? session?.user?.name : ""}`,
                 href: "/profile",
                 icon: (

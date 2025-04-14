@@ -5,7 +5,7 @@ export const FRIEND_STATUS_ENUM = pgEnum('friend_status', ['PENDING', 'ACCEPTED'
 export const ROLE_ENUM = pgEnum('role', ['USER', 'ADMIN']);
 
 export const users = pgTable('users', {
-    id: text('id').primaryKey(),
+    id: uuid('id').primaryKey(),
     name: text('name').notNull(),
     email: text('email').notNull().unique(),
     image: text('image'),
@@ -15,7 +15,7 @@ export const users = pgTable('users', {
 });
 
 export const rooms = pgTable('rooms', {
-    id: uuid('id').notNull().primaryKey().defaultRandom().unique(),
+    id: uuid('id').primaryKey().defaultRandom(),
     name: text('name').notNull(),
     description: text('description'),
     thumbnail: text('thumbnail'),
@@ -33,7 +33,7 @@ export const relationsRooms = pgTable('relations_rooms', {
 
 export const relationsUsers = pgTable('relations_users', {
     userId: uuid('user_id').notNull().references(() => users.id),
-    friendId: uuid('user_id').notNull().references(() => users.id),
+    friendId: uuid('friend_id').notNull().references(() => users.id),
     status: FRIEND_STATUS_ENUM('friend_status').default("PENDING"),
 });
 
