@@ -8,13 +8,16 @@ import Logout from "@/components/Logout";
 import Messages from "@/components/Messages";
 import SidebarFooter from "@/components/SidebarFooter";
 import SignIn from "@/components/SignIn";
-import { Sidebar, SidebarBody } from "@/components/ui/sidebar";
+import { AnimatedModalDemo } from "@/components/triggerModal"
+import { Sidebar, SidebarBody, SidebarGroupLink } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
+import { sidebarLinks } from "@/data";
 
 export default function Home() {
   const [open, setOpen] = useState(false);
+  const [openRoom, setOpenRoom] = useState(0);
   const {data: session} = useSession();
 
   return (
@@ -35,9 +38,14 @@ export default function Home() {
               <div className="mt-8 flex flex-col gap-2">
                 {/* Sidebar Content */}
                 {session ? (
-                  open ? <></> : <></>
-                  ) :
-                  <LoadingGroups open={open}/>
+                  <>
+                    {sidebarLinks.map((link, i) => (
+                      <AnimatedModalDemo key={i} open={open} link={link}  />
+                    ))}
+                    </>
+                  ) : (
+                    <LoadingGroups open={open}/>
+                  )
                 }
               </div>
             </div>

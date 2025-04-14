@@ -10,10 +10,10 @@ const SidebarFooter = ({
 
     return (
             <SidebarLink
-            className="font-roboto"
-            link={{
-            label: `${open ? session?.user?.name : ""}`,
-            href: "#",
+                className="font-roboto"
+                link={{
+                label: `${open ? session?.user?.name : ""}`,
+                href: "#",
                 icon: (
                     <img
                         src={`${session?.user?.image}`}
