@@ -1,6 +1,15 @@
 # 0.1.0 (2025-04-14)
 
 
+### Features
+
+* add changelog to home page ([8d07a3e](https://github.com/RafaelEtec/nextchat/commit/8d07a3e124223a84be76170f09357110a01ea71d))
+
+
+
+# 0.1.0 (2025-04-14)
+
+
 
 Todas as mudanças importantes deste projeto serão documentadas aqui.
 
