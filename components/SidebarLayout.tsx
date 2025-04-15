@@ -10,7 +10,6 @@ import Logo from "@/components/Logo";
 import LogoIcon from "@/components/LogoIcon";
 import Logout from "@/components/Logout";
 import SidebarFooter from "@/components/SidebarFooter";
-import SignIn from "@/components/SignIn";
 import LoadingGroups from "@/components/LoadingGroups";
 import { sidebarLinks } from "@/data";
 import { cn } from "@/lib/utils";
@@ -27,7 +26,7 @@ export default function SidebarLayout({
     <div className="flex h-full w-full">
       <div
         className={cn(
-          "mx-auto flex w-full flex-col overflow-hidden rounded-md border border-none bg-my-background md:flex-row",
+          "mx-auto flex w-full flex-col overflow-hidden rounded-md bg-my-background md:flex-row",
           "h-screen"
         )}
       >

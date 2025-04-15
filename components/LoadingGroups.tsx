@@ -1,9 +1,9 @@
-
 const LoadingGroups = ({
     open,
 }: {
     open: boolean
 }) => {
+
     return (
         <div className="flex flex-col gap-2 items-start">
             {open ? (
