@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.4](https://github.com/RafaelEtec/nextchat/compare/v0.1.3...v0.1.4) (2025-04-15)
+
+
+### Features
+
+* friend invites are now visible to the user ([8bf5d3b](https://github.com/RafaelEtec/nextchat/commit/8bf5d3b8105582ce039be0607349836384eb2f92))
+
+
+### Bug Fixes
+
+* updated interfaces so they accept inner joins ([d5be43d](https://github.com/RafaelEtec/nextchat/commit/d5be43d6bfdc5879fbe834a15011c9c7771324de))
+
 ### [0.1.3](https://github.com/RafaelEtec/nextchat/compare/v0.1.2...v0.1.3) (2025-04-15)
 
 
