@@ -9,10 +9,10 @@ export const findUserByEmail = async (params: InviteByEmailParams) => {
 
     try {
         const found = await db
-            .select({users})
-            .from(users)
-            .where(eq(users.email, email))
-            .limit(1);
+        .select({users})
+        .from(users)
+        .where(eq(users.email, email))
+        .limit(1);
 
         if (found.length === 0) {
             return {
@@ -22,7 +22,7 @@ export const findUserByEmail = async (params: InviteByEmailParams) => {
         }
 
         return {
-            success: true,
+            success: null,
             data: JSON.parse(JSON.stringify(found[0].users)),
         };
     } catch (error) {

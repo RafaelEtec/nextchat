@@ -7,7 +7,6 @@ import { z } from "zod";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useRouter } from "next/navigation";
 import { inviteByEmailSchema } from "@/lib/validations";
 import { Button } from "@/components/ui/button";
 import { inviteByEmail } from '@/lib/actions/relationsUsers';
@@ -16,14 +15,13 @@ import { useSession } from 'next-auth/react';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
 const page = () => {
-  const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [isSending, setIsSending] = useState<boolean>(false)
-  const [isSent, setIsSent] = useState<boolean>(false)
-  const [notFound, setNotFound] = useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isSending, setIsSending] = useState<boolean>(false);
+  const [result, setResult] = useState<boolean | null>(null);
+  const [message, setMessage] = useState<string>("");
   const {data: session} = useSession();
   const [foundUser, setFoundUser] = useState<User | null>(null);
 
-  const router = useRouter();
   const solicitacoes = null;
 
   const EmailForm = useForm<z.infer<typeof inviteByEmailSchema>>({
@@ -37,13 +35,12 @@ const page = () => {
 
   const onSubmitFindUserByEmail = async (values: z.infer<typeof inviteByEmailSchema>) => {
     setFoundUser(null);
-    setIsSent(false);
-    setNotFound(false);
     if (values.email === session?.user?.email) return
 
     setIsLoading(true);
     const found = await findUserByEmail(values);
-    if (!found.success) { setNotFound(true); }
+    setResult(found.success);
+    setMessage(found.message!);
     setIsLoading(false);
     setFoundUser(found.data);
   }
@@ -51,22 +48,20 @@ const page = () => {
   const onSubmitInviteByEmail = async (values: z.infer<typeof inviteByEmailSchema>) => {
     if (!foundUser) return;
     setIsSending(true);
-    setNotFound(false);
-    setIsSent(false);
     EmailForm.setValue("friendId", foundUser.id);
     const result = await inviteByEmail({
       email: values.email,
       userId: session?.user?.id!,
       friendId: foundUser.id,
     });
-    setIsSent(true);
+    setResult(result.success);
+    setMessage(result.message!);
     setIsSending(false);
     clearSpaces();
   }
 
   const clearSpaces = () => {
     setFoundUser(null);
-    setNotFound(false);
     EmailForm.setValue("email", "");
     EmailForm.setValue("friendId", "");
   }
@@ -119,22 +114,15 @@ const page = () => {
               </div>
             </div>
             <div className='font-roboto'>
-                {isSent && (
-                  <Alert className='border-google-lg-green'>
-                  <AlertTitle className='flex flex-1 gap-2 text-google-lg-green font-roboto'><img width={20} height={20} src="check_green.svg" alt="Boa" />Boa!</AlertTitle>
-                  <AlertDescription className='text-google-lg-green font-roboto'>
-                    O Convite Foi Enviado!
+                {result != null && (
+                  <Alert className={`border-${result ? "google-lg-green" : "google-lg-yellow"}`}>
+                  <AlertTitle className={`flex flex-1 gap-2 text-${result ? "google-lg-green" : "google-lg-yellow"} font-roboto`}><img width={20} height={20} src={`${result ? "check_green.svg" : "question_yellow.svg"}`} alt="Boa" />Boa!</AlertTitle>
+                  <AlertDescription className={`text-${result ? "google-lg-green" : "google-lg-yellow"} font-roboto`}>
+                    {message}
                   </AlertDescription>
                 </Alert>
                 )}
-                {notFound && (
-                  <Alert className='border-google-lg-yellow'>
-                    <AlertTitle className='flex flex-1 gap-2 text-google-lg-yellow'><img width={20} height={20} src="question_yellow.svg" alt="Opa" />Opa</AlertTitle>
-                    <AlertDescription className='text-google-lg-yellow'>
-                      Usuário Não Encontrado!
-                    </AlertDescription>
-                  </Alert>
-                )}
+
                 {isLoading && (
                   <div className='flex items-center justify-center'>
                     <img src="loading.svg" alt="loading" width={100} height={100} className='animate-spin'/>
