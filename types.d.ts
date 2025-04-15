@@ -6,6 +6,13 @@ interface User {
     createdAt: string;
 }
 
+interface Solicitacao {
+    userId: string;
+    friendId: string;
+    status: string;
+    user: User;
+}
+
 interface InviteByEmailParams {
     email: string;
     userId: string;
