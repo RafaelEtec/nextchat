@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -9,10 +9,11 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from "@/component
 import { Input } from "@/components/ui/input";
 import { inviteByEmailSchema } from "@/lib/validations";
 import { Button } from "@/components/ui/button";
-import { inviteByEmail } from '@/lib/actions/relationsUsers';
+import { findSolicitacoesById, inviteByEmail } from '@/lib/actions/relationsUsers';
 import { findUserByEmail } from '@/lib/actions/users';
 import { useSession } from 'next-auth/react';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import Solicitacoes from '@/components/Solicitacoes';
 
 const page = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -21,8 +22,16 @@ const page = () => {
   const [message, setMessage] = useState<string>("");
   const {data: session} = useSession();
   const [foundUser, setFoundUser] = useState<User | null>(null);
+  const [solicitacoes, setSolicitacoes] = useState<Solicitacao[] | null>(null);
 
-  const solicitacoes = null;
+  const fetchSolicitacoes = async () => {
+    const result = await findSolicitacoesById(session?.user?.id!);
+    setSolicitacoes(result);
+  }
+
+  useEffect(() => {
+    fetchSolicitacoes();
+  }, [session?.user?.id]);
 
   const EmailForm = useForm<z.infer<typeof inviteByEmailSchema>>({
     resolver: zodResolver(inviteByEmailSchema),
@@ -35,7 +44,11 @@ const page = () => {
 
   const onSubmitFindUserByEmail = async (values: z.infer<typeof inviteByEmailSchema>) => {
     setFoundUser(null);
-    if (values.email === session?.user?.email) return
+    if (values.email === session?.user?.email) {
+      setResult(false);
+      setMessage("Você não pode se convidar!");
+      return;
+    }
 
     setIsLoading(true);
     const found = await findUserByEmail(values);
@@ -58,6 +71,7 @@ const page = () => {
     setMessage(result.message!);
     setIsSending(false);
     clearSpaces();
+    fetchSolicitacoes();
   }
 
   const clearSpaces = () => {
@@ -116,7 +130,7 @@ const page = () => {
             <div className='font-roboto'>
                 {result != null && (
                   <Alert className={`border-${result ? "google-lg-green" : "google-lg-yellow"}`}>
-                  <AlertTitle className={`flex flex-1 gap-2 text-${result ? "google-lg-green" : "google-lg-yellow"} font-roboto`}><img width={20} height={20} src={`${result ? "check_green.svg" : "question_yellow.svg"}`} alt="Boa" />Boa!</AlertTitle>
+                  <AlertTitle className={`flex flex-1 gap-2 text-${result ? "google-lg-green" : "google-lg-yellow"} font-roboto`}><img width={20} height={20} src={`${result ? "check_green.svg" : "question_yellow.svg"}`} alt={`${result ? "Boa!" : "Opa..."}`}/>{result ? "Boa!" : "Opa..."}</AlertTitle>
                   <AlertDescription className={`text-${result ? "google-lg-green" : "google-lg-yellow"} font-roboto`}>
                     {message}
                   </AlertDescription>
@@ -132,9 +146,9 @@ const page = () => {
                   <>
                     <div key="foundUser" className="flex space-x-2 justify-start space-y-2 pr-4">
                       <img src={foundUser?.image} alt="Friend Avatar" className="h-20 w-20 rounded-full bg-google-black"/>
-                      <div className="">
-                        <p className="">{foundUser.name}</p>
-                        <p className="">{foundUser.email}</p>
+                      <div>
+                        <p>{foundUser.name}</p>
+                        <p>{foundUser.email}</p>
                       </div>
                     </div>
                     <div className='w-full flex items-center'>
@@ -156,14 +170,8 @@ const page = () => {
           <>
             <h2 className="text-xl font-semibold text-google-grey font-roboto py-8">Solicitações</h2>
             <div className="w-auto flex flex-wrap justify-start">
-              {[...new Array(2)].map((i, idx) => (
-                <div key={"first-array-demo-2" + idx} className="flex space-x-2 justify-start space-y-2 pr-4">
-                  <div className="h-20 w-20 animate-pulse rounded-full bg-google-black"></div>
-                  <div className="space-y-2">
-                    <div className="h-5 w-40 animate-pulse rounded-sm bg-google-black"></div>
-                    <div className="h-5 w-20 animate-pulse rounded-sm bg-google-black"></div>
-                  </div>
-                </div>
+              {solicitacoes.map((solicitacao, idx) => (
+                <Solicitacoes key={idx} user={solicitacao.user}/>
               ))}
             </div>
           </>

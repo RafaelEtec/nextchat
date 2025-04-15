@@ -1,8 +1,8 @@
 "use server";
 
-import {relationsUsers} from "@/database/schema";
+import {relationsUsers, users} from "@/database/schema";
 import {db} from "@/database/drizzle";
-import { and, eq, is } from "drizzle-orm";
+import { and, eq, is, or } from "drizzle-orm";
 
 export const inviteByEmail = async (params: InviteByEmailParams) => {
     const {userId, friendId} = params;
@@ -21,11 +21,16 @@ export const inviteByEmail = async (params: InviteByEmailParams) => {
         );
 
         if (isAlreadyFriend.length > 0) {
-            console.log("user " + isAlreadyFriend[0].userId);
-            console.log("friend " + isAlreadyFriend[0].friendId);
-            return {
-                success: false,
-                message: "Ops... Você já é amigo desse usuário!",
+            if (isAlreadyFriend[0].status === "ACCEPTED") {
+                return {
+                    success: false,
+                    message: "Você já é amigo desse usuário!",
+                }
+            } else {
+                return {
+                    success: false,
+                    message: "Você já enviou um pedido à ele!",
+                }
             }
         }
 
@@ -48,7 +53,7 @@ export const inviteByEmail = async (params: InviteByEmailParams) => {
         if (!invite1 || !invite2) {
             return {
                 success: false,
-                message: "Ops... Error ao convidar",
+                message: "Error ao convidar",
             }
         }
         return {
@@ -59,7 +64,45 @@ export const inviteByEmail = async (params: InviteByEmailParams) => {
         console.log(error);
         return {
             success: false,
-            message: "Ops... Error ao convidar",
+            message: "Error ao convidar",
         }
+    }
+}
+
+export async function findSolicitacoesById(id: string) {
+    try {
+        const solicitacoes = await db
+        .select({
+            userId: relationsUsers.userId,
+            friendId: relationsUsers.friendId,
+            status: relationsUsers.status,
+            user: {
+                id: users.id,
+                name: users.name,
+                email: users.email,
+                image: users.image,
+                createdAt: users.createdAt,
+            },
+        })
+        .from(relationsUsers)
+        .innerJoin(users, eq(relationsUsers.friendId, users.id))
+        .where(
+            and(
+                eq(relationsUsers.userId, id),
+                or (
+                    eq(relationsUsers.status, "PENDING"),
+                    eq(relationsUsers.status, "WAITING")
+                )
+            )
+        );
+
+        if (solicitacoes.length === 0) {
+            return null;
+        }
+
+        return JSON.parse(JSON.stringify(solicitacoes));
+    } catch (error) {
+        console.log(error);
+        return null;
     }
 }

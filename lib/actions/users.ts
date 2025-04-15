@@ -17,7 +17,7 @@ export const findUserByEmail = async (params: InviteByEmailParams) => {
         if (found.length === 0) {
             return {
                 success: false,
-                message: "Ops... Usuário não encontrado!",
+                message: "Usuário não encontrado!",
             }
         }
 
@@ -29,7 +29,7 @@ export const findUserByEmail = async (params: InviteByEmailParams) => {
         console.log(error);
         return {
             success: false,
-            message: "Ops... Error ao encontrar usuário",
+            message: "Erro ao encontrar usuário",
         }
     }
 }
