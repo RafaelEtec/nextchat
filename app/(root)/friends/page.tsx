@@ -77,8 +77,9 @@ const page = () => {
         <Dialog>
           <DialogTrigger className="text-my-blue" asChild>
             <Button
+              type='button'
               variant="outline"
-              className="contain-content border-my-blue rounded-2xl"
+              className="contain-content border-my-blue rounded-2xl cursor-pointer"
             >
               Convidar Amigos
               <img width={36} height={36} src="add.svg" alt="Add user"/>
@@ -111,7 +112,7 @@ const page = () => {
                       )}
                     />
                   </form>
-                  <Button onClick={EmailForm.handleSubmit(onSubmitFindUserByEmail)} type='submit' size="sm" className='mt-1'>
+                  <Button onClick={EmailForm.handleSubmit(onSubmitFindUserByEmail)} type='submit' size="sm" className='mt-1 cursor-pointer'>
                     <img src="magnifier.svg" alt="Procurar" width={30} height={30}/>
                   </Button>
                 </Form>
@@ -149,11 +150,11 @@ const page = () => {
                       </div>
                     </div>
                     <div className='w-full flex items-center'>
-                      <Button onClick={EmailForm.handleSubmit(onSubmitInviteByEmail)} type='submit' size="sm" className='flex-1/4 mt-1 border border-my-blue text-my-blue h-10'>
+                      <Button onClick={EmailForm.handleSubmit(onSubmitInviteByEmail)} type='submit' size="sm" className='flex-1/4 mt-1 border border-my-blue text-my-blue h-10 cursor-pointer'>
                         Convidar
                         <img src="adduser.svg" alt="Procurar" width={30} height={30}/>
                       </Button>
-                      <Button onClick={clearSpaces} type='submit' size="sm" className='flex-1 mt-1 border border-google-grey text-google-grey ml-2 h-10'>
+                      <Button onClick={clearSpaces} type='submit' size="sm" className='flex-1 mt-1 border border-google-grey text-google-grey ml-2 h-10 cursor-pointer'>
                         Cancelar
                       </Button>
                     </div>
