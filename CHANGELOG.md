@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.3](https://github.com/RafaelEtec/nextchat/compare/v0.1.2...v0.1.3) (2025-04-15)
+
+
+### Bug Fixes
+
+* better alerts ([cc55ee3](https://github.com/RafaelEtec/nextchat/commit/cc55ee3ba1e20afed62aecd2d1b2cebe09fb374c))
+
 ### [0.1.2](https://github.com/RafaelEtec/nextchat/compare/v0.1.1...v0.1.2) (2025-04-15)
 
 ### [0.1.1](https://github.com/RafaelEtec/nextchat/compare/v0.8.2...v0.1.1) (2025-04-15)
