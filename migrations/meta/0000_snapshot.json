@@ -1,5 +1,5 @@
 {
-  "id": "d7ce12bc-7ddb-453e-a6dc-61330e6f1d1e",
+  "id": "722a66d0-060b-4994-bce4-ddf2a2e7282f",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -31,15 +31,15 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "relations_rooms_user_id_users_id_fk": {
-          "name": "relations_rooms_user_id_users_id_fk",
+        "relations_rooms_user_id_users_tag_fk": {
+          "name": "relations_rooms_user_id_users_tag_fk",
           "tableFrom": "relations_rooms",
           "tableTo": "users",
           "columnsFrom": [
             "user_id"
           ],
           "columnsTo": [
-            "id"
+            "tag"
           ],
           "onDelete": "no action",
           "onUpdate": "no action"
@@ -91,28 +91,28 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "relations_users_user_id_users_id_fk": {
-          "name": "relations_users_user_id_users_id_fk",
+        "relations_users_user_id_users_tag_fk": {
+          "name": "relations_users_user_id_users_tag_fk",
           "tableFrom": "relations_users",
           "tableTo": "users",
           "columnsFrom": [
             "user_id"
           ],
           "columnsTo": [
-            "id"
+            "tag"
           ],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
-        "relations_users_friend_id_users_id_fk": {
-          "name": "relations_users_friend_id_users_id_fk",
+        "relations_users_friend_id_users_tag_fk": {
+          "name": "relations_users_friend_id_users_tag_fk",
           "tableFrom": "relations_users",
           "tableTo": "users",
           "columnsFrom": [
             "friend_id"
           ],
           "columnsTo": [
-            "id"
+            "tag"
           ],
           "onDelete": "no action",
           "onUpdate": "no action"
@@ -170,15 +170,7 @@
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {
-        "rooms_id_unique": {
-          "name": "rooms_id_unique",
-          "nullsNotDistinct": false,
-          "columns": [
-            "id"
-          ]
-        }
-      },
+      "uniqueConstraints": {},
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
@@ -189,9 +181,16 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "text",
+          "type": "uuid",
           "primaryKey": true,
           "notNull": true
+        },
+        "tag": {
+          "name": "tag",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "gen_random_uuid()"
         },
         "name": {
           "name": "name",
@@ -242,7 +241,8 @@
       "schema": "public",
       "values": [
         "PENDING",
-        "ACCEPTED"
+        "ACCEPTED",
+        "WAITING"
       ]
     },
     "public.role": {

@@ -1,7 +1,7 @@
 import { uuid, integer, pgTable, serial, text, timestamp, pgEnum } from 'drizzle-orm/pg-core';
 
 //export const STATUS_ENUM = pgEnum('status', ['OFFLINE', 'ONLINE']);
-export const FRIEND_STATUS_ENUM = pgEnum('friend_status', ['PENDING', 'ACCEPTED']);
+export const FRIEND_STATUS_ENUM = pgEnum('friend_status', ['PENDING', 'ACCEPTED', 'WAITING']);
 export const ROLE_ENUM = pgEnum('role', ['USER', 'ADMIN']);
 
 export const users = pgTable('users', {

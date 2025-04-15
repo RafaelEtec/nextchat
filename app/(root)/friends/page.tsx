@@ -4,20 +4,8 @@ import React, { useState } from 'react'
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "@/components/ui/form";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { inviteByEmailSchema } from "@/lib/validations";
@@ -25,9 +13,13 @@ import { Button } from "@/components/ui/button";
 import { inviteByEmail } from '@/lib/actions/relationsUsers';
 import { findUserByEmail } from '@/lib/actions/users';
 import { useSession } from 'next-auth/react';
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
 const page = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isSending, setIsSending] = useState<boolean>(false)
+  const [isSent, setIsSent] = useState<boolean>(false)
+  const [notFound, setNotFound] = useState<boolean>(false)
   const {data: session} = useSession();
   const [foundUser, setFoundUser] = useState<User | null>(null);
 
@@ -38,34 +30,43 @@ const page = () => {
     resolver: zodResolver(inviteByEmailSchema),
     defaultValues: {
       email: "",
-      userId: session?.user?.id,
+      userId: session?.user?.id!,
       friendId: "",
     }
   })
 
   const onSubmitFindUserByEmail = async (values: z.infer<typeof inviteByEmailSchema>) => {
     setFoundUser(null);
+    setIsSent(false);
+    setNotFound(false);
     if (values.email === session?.user?.email) return
 
     setIsLoading(true);
     const found = await findUserByEmail(values);
-    setFoundUser(found.data);
+    if (!found.success) { setNotFound(true); }
     setIsLoading(false);
+    setFoundUser(found.data);
   }
 
   const onSubmitInviteByEmail = async (values: z.infer<typeof inviteByEmailSchema>) => {
     if (!foundUser) return;
-    setIsLoading(true);
-    console.log(foundUser.id);
-    EmailForm.setValue("friendId", foundUser.id ?? "");
-    const result = inviteByEmail(values);
-    console.log(result);
-    setIsLoading(false);
-    clearSpaces
+    setIsSending(true);
+    setNotFound(false);
+    setIsSent(false);
+    EmailForm.setValue("friendId", foundUser.id);
+    const result = await inviteByEmail({
+      email: values.email,
+      userId: session?.user?.id!,
+      friendId: foundUser.id,
+    });
+    setIsSent(true);
+    setIsSending(false);
+    clearSpaces();
   }
 
   const clearSpaces = () => {
-    setFoundUser(null)
+    setFoundUser(null);
+    setNotFound(false);
     EmailForm.setValue("email", "");
     EmailForm.setValue("friendId", "");
   }
@@ -83,7 +84,7 @@ const page = () => {
               <img width={36} height={36} src="add.svg" alt="Add user"/>
             </Button>
           </DialogTrigger>
-          <DialogContent>
+          <DialogContent className={`${isSending ? "animate-pulse" : ""}`}>
             <DialogHeader>
               <DialogTitle className="text-my-blue">Convide alguém pelo E-mail</DialogTitle>
             </DialogHeader>
@@ -101,6 +102,7 @@ const page = () => {
                               required
                               placeholder="fulano@nextchat.com"
                               {...field}
+                              onClick={clearSpaces}
                               className="book-form_input"
                             />
                           </FormControl>
@@ -116,6 +118,22 @@ const page = () => {
               </div>
             </div>
             <div className='font-roboto'>
+                {isSent && (
+                  <Alert className='border-google-lg-green'>
+                  <AlertTitle className='flex flex-1 gap-2 text-google-lg-green font-roboto'><img width={20} height={20} src="check_green.svg" alt="Boa" />Boa!</AlertTitle>
+                  <AlertDescription className='text-google-lg-green font-roboto'>
+                    O Convite Foi Enviado!
+                  </AlertDescription>
+                </Alert>
+                )}
+                {notFound && (
+                  <Alert className='border-google-lg-yellow'>
+                    <AlertTitle className='flex flex-1 gap-2 text-google-lg-yellow'><img width={20} height={20} src="question_yellow.svg" alt="Opa" />Opa</AlertTitle>
+                    <AlertDescription className='text-google-lg-yellow'>
+                      Usuário Não Encontrado!
+                    </AlertDescription>
+                  </Alert>
+                )}
                 {isLoading && (
                   <div className='flex items-center justify-center'>
                     <img src="loading.svg" alt="loading" width={100} height={100} className='animate-spin'/>
@@ -180,7 +198,3 @@ const page = () => {
 }
 
 export default page
-
-function useEffect(arg0: () => void, arg1: string[]) {
-  throw new Error('Function not implemented.');
-}

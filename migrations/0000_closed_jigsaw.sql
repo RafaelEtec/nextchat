@@ -1,4 +1,4 @@
-CREATE TYPE "public"."friend_status" AS ENUM('PENDING', 'ACCEPTED');--> statement-breakpoint
+CREATE TYPE "public"."friend_status" AS ENUM('PENDING', 'ACCEPTED', 'WAITING');--> statement-breakpoint
 CREATE TYPE "public"."role" AS ENUM('USER', 'ADMIN');--> statement-breakpoint
 CREATE TABLE "relations_rooms" (
 	"user_id" uuid NOT NULL,
@@ -18,12 +18,12 @@ CREATE TABLE "rooms" (
 	"description" text,
 	"thumbnail" text,
 	"created_at" timestamp with time zone DEFAULT now(),
-	"updated_at" timestamp NOT NULL,
-	CONSTRAINT "rooms_id_unique" UNIQUE("id")
+	"updated_at" timestamp NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE "users" (
-	"id" text PRIMARY KEY NOT NULL,
+	"id" uuid PRIMARY KEY NOT NULL,
+	"tag" uuid DEFAULT gen_random_uuid(),
 	"name" text NOT NULL,
 	"email" text NOT NULL,
 	"image" text,
@@ -31,7 +31,7 @@ CREATE TABLE "users" (
 	CONSTRAINT "users_email_unique" UNIQUE("email")
 );
 --> statement-breakpoint
-ALTER TABLE "relations_rooms" ADD CONSTRAINT "relations_rooms_user_id_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "relations_rooms" ADD CONSTRAINT "relations_rooms_user_id_users_tag_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users"("tag") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "relations_rooms" ADD CONSTRAINT "relations_rooms_room_id_rooms_id_fk" FOREIGN KEY ("room_id") REFERENCES "public"."rooms"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE "relations_users" ADD CONSTRAINT "relations_users_user_id_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE "relations_users" ADD CONSTRAINT "relations_users_friend_id_users_id_fk" FOREIGN KEY ("friend_id") REFERENCES "public"."users"("id") ON DELETE no action ON UPDATE no action;
+ALTER TABLE "relations_users" ADD CONSTRAINT "relations_users_user_id_users_tag_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users"("tag") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "relations_users" ADD CONSTRAINT "relations_users_friend_id_users_tag_fk" FOREIGN KEY ("friend_id") REFERENCES "public"."users"("tag") ON DELETE no action ON UPDATE no action;

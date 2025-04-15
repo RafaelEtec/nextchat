@@ -1,6 +1,6 @@
 {
-  "id": "80425839-c8ea-4e22-b4ef-f1c4e2277a04",
-  "prevId": "d7ce12bc-7ddb-453e-a6dc-61330e6f1d1e",
+  "id": "02155ad0-7733-40bf-9765-0aed64c3b940",
+  "prevId": "722a66d0-060b-4994-bce4-ddf2a2e7282f",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -234,7 +234,8 @@
       "schema": "public",
       "values": [
         "PENDING",
-        "ACCEPTED"
+        "ACCEPTED",
+        "WAITING"
       ]
     },
     "public.role": {
