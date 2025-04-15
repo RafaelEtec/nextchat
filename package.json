@@ -1,6 +1,6 @@
 {
   "name": "nextchat",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
@@ -11,6 +11,7 @@
     "db:migrate": "npx drizzle-kit migrate",
     "db:studio": "npx drizzle-kit studio",
     "db:push": "npx drizzle-kit push",
+    "release": "standard-version",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s"
   },
   "dependencies": {
@@ -63,6 +64,7 @@
     "drizzle-kit": "^0.30.6",
     "eslint": "^9",
     "eslint-config-next": "15.2.4",
+    "standard-version": "^9.5.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
