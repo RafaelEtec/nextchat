@@ -1,35 +1,171 @@
-import React from 'react'
+"use client";
+
+import React, { useState } from 'react'
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { useRouter } from "next/navigation";
+import { inviteByEmailSchema } from "@/lib/validations";
+import { Button } from "@/components/ui/button";
+import { inviteByEmail } from '@/lib/actions/relationsUsers';
+import { findUserByEmail } from '@/lib/actions/users';
+import { useSession } from 'next-auth/react';
 
 const page = () => {
-  const solicitacoes = 1;
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const {data: session} = useSession();
+  const [foundUser, setFoundUser] = useState<User | null>(null);
+
+  const router = useRouter();
+  const solicitacoes = null;
+
+  const EmailForm = useForm<z.infer<typeof inviteByEmailSchema>>({
+    resolver: zodResolver(inviteByEmailSchema),
+    defaultValues: {
+      email: "",
+      userId: session?.user?.id,
+      friendId: "",
+    }
+  })
+
+  const onSubmitFindUserByEmail = async (values: z.infer<typeof inviteByEmailSchema>) => {
+    setFoundUser(null);
+    if (values.email === session?.user?.email) return
+
+    setIsLoading(true);
+    const found = await findUserByEmail(values);
+    setFoundUser(found.data);
+    setIsLoading(false);
+  }
+
+  const onSubmitInviteByEmail = async (values: z.infer<typeof inviteByEmailSchema>) => {
+    if (!foundUser) return;
+    setIsLoading(true);
+    console.log(foundUser.id);
+    EmailForm.setValue("friendId", foundUser.id ?? "");
+    const result = inviteByEmail(values);
+    console.log(result);
+    setIsLoading(false);
+    clearSpaces
+  }
+
+  const clearSpaces = () => {
+    setFoundUser(null)
+    EmailForm.setValue("email", "");
+    EmailForm.setValue("friendId", "");
+  }
 
   return (
-    <section className="w-full rounded-2xl p-11 flex-1 justify-between lg:flex-col">
-      {solicitacoes > 0 && (
-        <>
-          <h2 className="text-xl font-semibold text-google-grey font-roboto py-8">Solicitações</h2>
-      <div className="w-auto flex flex-wrap justify-center">
-        {[...new Array(4)].map((i, idx) => (
-          <div key={"first-array-demo-2" + idx} className="flex space-x-2 justify-start space-y-2 pr-4">
-            <div className="h-20 w-20 animate-pulse rounded-full bg-google-black"></div>
-            <div className="space-y-2">
-              <div className="h-5 w-40 animate-pulse rounded-sm bg-google-black"></div>
-              <div className="h-5 w-20 animate-pulse rounded-sm bg-google-black"></div>
+    <section className="w-full rounded-2xl p-11 flex-1 justify-between lg:flex-col font-roboto">
+      <div className="w-full h-full">
+        <Dialog>
+          <DialogTrigger className="text-my-blue" asChild>
+            <Button
+              variant="outline"
+              className="contain-content border-my-blue rounded-2xl"
+            >
+              Convidar Amigos
+              <img width={36} height={36} src="add.svg" alt="Add user"/>
+            </Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle className="text-my-blue">Convide alguém pelo E-mail</DialogTitle>
+            </DialogHeader>
+            <div className="flex items-center space-x-2">
+              <div className="flex-1 gap-2 inline-flex">
+                <Form {...EmailForm}>
+                  <form onSubmit={EmailForm.handleSubmit(onSubmitFindUserByEmail)} className='w-full'>
+                    <FormField
+                      control={EmailForm.control}
+                      name={"email"}
+                      render={({ field }) => (
+                        <FormItem className="flex flex-col gap-1">
+                          <FormControl>
+                            <Input
+                              required
+                              placeholder="fulano@nextchat.com"
+                              {...field}
+                              className="book-form_input"
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </form>
+                  <Button onClick={EmailForm.handleSubmit(onSubmitFindUserByEmail)} type='submit' size="sm" className='mt-1'>
+                    <img src="magnifier.svg" alt="Procurar" width={30} height={30}/>
+                  </Button>
+                </Form>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
-        </>
-      )}
+            <div className='font-roboto'>
+                {isLoading && (
+                  <div className='flex items-center justify-center'>
+                    <img src="loading.svg" alt="loading" width={100} height={100} className='animate-spin'/>
+                  </div>
+                )}
+                {foundUser && (
+                  <>
+                    <div key="foundUser" className="flex space-x-2 justify-start space-y-2 pr-4">
+                      <img src={foundUser?.image} alt="Friend Avatar" className="h-20 w-20 rounded-full bg-google-black"/>
+                      <div className="">
+                        <p className="">{foundUser.name}</p>
+                        <p className="">{foundUser.email}</p>
+                      </div>
+                    </div>
+                    <div className='w-full flex items-center'>
+                      <Button onClick={EmailForm.handleSubmit(onSubmitInviteByEmail)} type='submit' size="sm" className='flex-1/4 mt-1 border border-my-blue text-my-blue h-10'>
+                        Convidar
+                        <img src="adduser.svg" alt="Procurar" width={30} height={30}/>
+                      </Button>
+                      <Button onClick={clearSpaces} type='submit' size="sm" className='flex-1 mt-1 border border-google-grey text-google-grey ml-2 h-10'>
+                        Cancelar
+                      </Button>
+                    </div>
+                  </>
+                )}
+              </div>
+          </DialogContent>
+        </Dialog>
 
-      <h2 className="text-xl font-semibold text-google-grey font-roboto pb-8">Convidar</h2>
-      <div className="w-auto flex flex-wrap justify-center">
-        
+        {solicitacoes && (
+          <>
+            <h2 className="text-xl font-semibold text-google-grey font-roboto py-8">Solicitações</h2>
+            <div className="w-auto flex flex-wrap justify-start">
+              {[...new Array(2)].map((i, idx) => (
+                <div key={"first-array-demo-2" + idx} className="flex space-x-2 justify-start space-y-2 pr-4">
+                  <div className="h-20 w-20 animate-pulse rounded-full bg-google-black"></div>
+                  <div className="space-y-2">
+                    <div className="h-5 w-40 animate-pulse rounded-sm bg-google-black"></div>
+                    <div className="h-5 w-20 animate-pulse rounded-sm bg-google-black"></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
       </div>
 
-      <h2 className="text-xl font-semibold text-google-grey font-roboto pb-8">Amigos</h2>
-      <div className="w-auto flex flex-wrap justify-center">
-        {[...new Array(11)].map((i, idx) => (
+      <h2 className="text-xl font-semibold text-google-grey font-roboto pb-4 mt-4 lg:pb-8 lg:mt-4">Amigos</h2>
+      <div className="w-auto flex flex-wrap justify-start">
+        {[...new Array(5)].map((i, idx) => (
           <div key={"first-array-demo-1" + idx} className="flex space-x-2 justify-start space-y-2 pr-4">
             <div className="h-20 w-20 animate-pulse rounded-full bg-google-black"></div>
             <div className="space-y-2">
@@ -44,3 +180,7 @@ const page = () => {
 }
 
 export default page
+
+function useEffect(arg0: () => void, arg1: string[]) {
+  throw new Error('Function not implemented.');
+}

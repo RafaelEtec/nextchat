@@ -1,39 +1,34 @@
-# 0.5.0 (2025-04-14)
-
-### Features
-
-* add changelog to home page ([8d07a3e](https://github.com/RafaelEtec/nextchat/commit/8d07a3e124223a84be76170f09357110a01ea71d))
-
-# 0.4.0 (2025-04-14)
-
-Todas as mudanças importantes deste projeto serão documentadas aqui.
-
-## [0.3.0]
-
-### Adicionado
-- Página de changelog na UI.
-- Suporte à leitura do `README.md` dentro da interface.
-
----
-
-## [0.2.0] - 2025-04-14
-
-### Adicionado
-- Componentes de sidebar (`Sidebar`, `SidebarBody`, `SidebarLink`, etc) com animações via Framer Motion.
-- Suporte a Zustand para controle de estado global (ex: abrir/fechar sidebar).
-- Autenticação via GitHub e Google usando NextAuth.
-- Layout responsivo com adaptação para dispositivos móveis.
-- Navegação por grupos de conversa.
-
-### Corrigido
-- Problema de chave duplicada em listas de links da sidebar.
-- Incompatibilidade entre `useState` e Zustand no componente `Sidebar`.
-
----
-
-## [0.1.0] - 2025-04-10
-
-### Adicionado
-- Primeira versão estável do app de chat em tempo real 🎉
-- Login com provedores externos.
-- Layout com sidebar dinâmica e responsiva.
+### 2025-04-15
+- feat: add friends page style
+### 2025-04-15
+- feat: add shadcn
+### 2025-04-14
+- feat: add Rooms path
+### 2025-04-14
+- new changelog
+### 2025-04-14
+- feat: add changelog to home page
+### 2025-04-14
+- new layout style & routes
+### 2025-04-13
+- starting friends page
+### 2025-04-13
+- better Auth & saving user to DB
+### 2025-04-11
+- Merge branch 'master' of https://github.com/RafaelEtec/nextchat
+### 2025-04-11
+- starting production build
+### 2025-04-10
+- Update README.md
+### 2025-04-09
+- google auth
+### 2025-04-09
+- sidebard new style
+### 2025-04-08
+- Auth completed & SessionProvider
+### 2025-04-08
+- saving color pallete & Index initial style
+### 2025-04-08
+- Update README.md
+### 2025-04-08
+- Initial commit from Create Next App
