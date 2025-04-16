@@ -22,6 +22,20 @@
       "when": 1744812256258,
       "tag": "0002_sharp_fantastic_four",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1744813490138,
+      "tag": "0003_fair_forgotten_one",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1744813781129,
+      "tag": "0004_complete_blue_blade",
+      "breakpoints": true
     }
   ]
 }

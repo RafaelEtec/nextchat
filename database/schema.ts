@@ -1,4 +1,5 @@
 import { uuid, integer, pgTable, serial, text, timestamp, pgEnum } from 'drizzle-orm/pg-core';
+import { access } from 'fs';
 
 //export const STATUS_ENUM = pgEnum('status', ['OFFLINE', 'ONLINE']);
 export const FRIEND_STATUS_ENUM = pgEnum('friend_status', ['PENDING', 'ACCEPTED', 'WAITING']);
@@ -14,7 +15,7 @@ export const users = pgTable('users', {
     }).defaultNow(),
 });
 
-export const rooms = pgTable('rooms', {
+export const groups = pgTable('groups', {
     id: uuid('id').primaryKey().defaultRandom(),
     name: text('name').notNull(),
     description: text('description'),
@@ -22,14 +23,21 @@ export const rooms = pgTable('rooms', {
     createdAt: timestamp('created_at', {
         withTimezone: true,
     }).defaultNow(),
-    updatedAt: timestamp('updated_at').notNull().$onUpdate(() => new Date()),
+    updatedAt: timestamp('updated_at', {
+        withTimezone: true,
+    }).defaultNow().notNull().$onUpdate(() => new Date()),
 });
 
-export const relationsRooms = pgTable('relations_rooms', {
+export const rooms = pgTable('rooms', {
     id: uuid('id').primaryKey().defaultRandom(),
-    userId: uuid('user_id').notNull().references(() => users.id),
-    roomId: uuid('room_id').notNull().references(() => rooms.id),
-    role: ROLE_ENUM('role').default("USER"),
+    name: text('name').notNull(),
+    description: text('description'),
+    createdAt: timestamp('created_at', {
+        withTimezone: true,
+    }).defaultNow(),
+    updatedAt: timestamp('updated_at', {
+        withTimezone: true,
+    }).defaultNow().notNull().$onUpdate(() => new Date()),
 });
 
 export const relationsUsers = pgTable('relations_users', {
@@ -37,7 +45,25 @@ export const relationsUsers = pgTable('relations_users', {
     userId: uuid('user_id').notNull().references(() => users.id),
     friendId: uuid('friend_id').notNull().references(() => users.id),
     status: FRIEND_STATUS_ENUM('friend_status').default("PENDING"),
+    updatedAt: timestamp('updated_at', {
+        withTimezone: true,
+    }).defaultNow().notNull().$onUpdate(() => new Date()),
 });
+
+export const relationsGroups = pgTable('relations_groups', {
+    id: uuid('id').primaryKey().defaultRandom(),
+    userId: uuid('user_id').notNull().references(() => users.id),
+    groupId: uuid('group_id').notNull().references(() => groups.id),
+    role: ROLE_ENUM('role').default("USER"),
+});
+
+export const relationsRooms = pgTable('relations_rooms', {
+    id: uuid('id').primaryKey().defaultRandom(),
+    userId: uuid('user_id').notNull().references(() => users.id),
+    roomId: uuid('room_id').notNull().references(() => rooms.id),
+    access: ROLE_ENUM('access').default("USER"),
+});
+
 
 // export const postsTable = pgTable('posts_table', {
 //   id: serial('id').primaryKey(),
