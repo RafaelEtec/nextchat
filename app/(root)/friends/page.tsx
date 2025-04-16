@@ -15,6 +15,7 @@ import { useSession } from 'next-auth/react';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
 const page = () => {
+  const [isVisible, setIsVisible] = useState(true);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isSending, setIsSending] = useState<boolean>(false);
   const [result, setResult] = useState<boolean | null>(null);
@@ -62,6 +63,7 @@ const page = () => {
     }
 
     setIsLoading(true);
+    setIsVisible(true);
     const found = await findUserByEmail(values);
     setResult(found.success);
     setMessageHeader(found.messageHeader);
@@ -79,11 +81,13 @@ const page = () => {
       userId: session?.user?.id!,
       friendId: foundUser.id,
     });
+    setIsVisible(true);
     setResult(result.success);
     setMessageHeader(result.messageHeader);
     setMessage(result.message);
     setIsSending(false);
     clearSpaces();
+
     fetchSolicitacoes();
   }
 
@@ -93,13 +97,24 @@ const page = () => {
     EmailForm.setValue("friendId", "");
   }
 
+  useEffect(() => {
+    if (result !== null && isVisible) {
+      const timer = setTimeout(() => {
+        setIsVisible(false);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [result, isVisible]);
+
   const handleInvite = async (friendId: string, action: string) => {
     setIsSending(true);
     const result = await respondInvite(session?.user?.id!, friendId, action);
+    setIsVisible(true);
     setPageResult(result.success);
     setPageMessageHeader(result.messageHeader);
     setPageMessage(result.message);
     setIsSending(false);
+
     fetchSolicitacoes();
     fetchAmigos();
   }
@@ -152,7 +167,7 @@ const page = () => {
               </div>
             </div>
             <div className='font-roboto'>
-                {result != null && (
+                {isVisible && result != null && (
                   <Alert className={`border-${result ? "google-lg-green" : "google-lg-yellow"}`}>
                   <AlertTitle className={`flex flex-1 gap-2 text-${result ? "google-lg-green" : "google-lg-yellow"} font-roboto`}><img width={20} height={20} src={`${result ? "check_green.svg" : "question_yellow.svg"}`} alt={messageHeader}/>{messageHeader}</AlertTitle>
                   <AlertDescription className={`text-${result ? "google-lg-green" : "google-lg-yellow"} font-roboto`}>
@@ -169,7 +184,7 @@ const page = () => {
                 {foundUser && (
                   <>
                     <div key="foundUser" className="flex space-x-2 justify-start space-y-2 pr-4">
-                      <img src={foundUser?.image} alt="Friend Avatar" className="h-20 w-20 rounded-full bg-google-black"/>
+                      <img src={foundUser.image} alt="Friend Avatar" className="h-20 w-20 rounded-full bg-google-black"/>
                       <div>
                         <p>{foundUser.name}</p>
                         <p>{foundUser.email}</p>

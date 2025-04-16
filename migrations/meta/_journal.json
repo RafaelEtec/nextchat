@@ -15,6 +15,13 @@
       "when": 1744748265002,
       "tag": "0001_sour_dark_beast",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1744812256258,
+      "tag": "0002_sharp_fantastic_four",
+      "breakpoints": true
     }
   ]
 }

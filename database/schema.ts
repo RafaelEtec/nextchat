@@ -26,12 +26,14 @@ export const rooms = pgTable('rooms', {
 });
 
 export const relationsRooms = pgTable('relations_rooms', {
+    id: uuid('id').primaryKey().defaultRandom(),
     userId: uuid('user_id').notNull().references(() => users.id),
     roomId: uuid('room_id').notNull().references(() => rooms.id),
     role: ROLE_ENUM('role').default("USER"),
 });
 
 export const relationsUsers = pgTable('relations_users', {
+    id: uuid('id').primaryKey().defaultRandom(),
     userId: uuid('user_id').notNull().references(() => users.id),
     friendId: uuid('friend_id').notNull().references(() => users.id),
     status: FRIEND_STATUS_ENUM('friend_status').default("PENDING"),
