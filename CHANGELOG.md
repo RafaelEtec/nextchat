@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.6](https://github.com/RafaelEtec/nextchat/compare/v0.1.5...v0.1.6) (2025-04-16)
+
+
+### Features
+
+* new favicon ([36f09a2](https://github.com/RafaelEtec/nextchat/commit/36f09a286ae8353448cd1999ca557a6b2310fae6))
+
+
+### Bug Fixes
+
+* add ID to rooms related tables ([8f5f2b9](https://github.com/RafaelEtec/nextchat/commit/8f5f2b9cfd49a090d8c41a2d7390b7bf7d96b7f1))
+* database rethinking ([d6de27f](https://github.com/RafaelEtec/nextchat/commit/d6de27f0b85cac3f3b3a7547233e1bb38982992a))
+
 ### [0.1.5](https://github.com/RafaelEtec/nextchat/compare/v0.1.4...v0.1.5) (2025-04-16)
 
 
