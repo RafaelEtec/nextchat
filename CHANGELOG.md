@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.5](https://github.com/RafaelEtec/nextchat/compare/v0.1.4...v0.1.5) (2025-04-16)
+
+
+### Features
+
+* fetch of Friends and Invites for both users ([c80873c](https://github.com/RafaelEtec/nextchat/commit/c80873c6106d154afeead21f69c655bcbe4030a7))
+
 ### [0.1.4](https://github.com/RafaelEtec/nextchat/compare/v0.1.3...v0.1.4) (2025-04-15)
 
 
