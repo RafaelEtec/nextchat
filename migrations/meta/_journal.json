@@ -5,36 +5,15 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1744746845133,
-      "tag": "0000_closed_jigsaw",
+      "when": 1744815777541,
+      "tag": "0000_lumpy_wind_dancer",
       "breakpoints": true
     },
     {
       "idx": 1,
       "version": "7",
-      "when": 1744748265002,
-      "tag": "0001_sour_dark_beast",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1744812256258,
-      "tag": "0002_sharp_fantastic_four",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1744813490138,
-      "tag": "0003_fair_forgotten_one",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "7",
-      "when": 1744813781129,
-      "tag": "0004_complete_blue_blade",
+      "when": 1744815997451,
+      "tag": "0001_friendly_toro",
       "breakpoints": true
     }
   ]

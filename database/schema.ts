@@ -25,7 +25,7 @@ export const groups = pgTable('groups', {
     }).defaultNow(),
     updatedAt: timestamp('updated_at', {
         withTimezone: true,
-    }).defaultNow().notNull().$onUpdate(() => new Date()),
+    }).defaultNow().$onUpdate(() => new Date()),
 });
 
 export const rooms = pgTable('rooms', {
@@ -37,7 +37,7 @@ export const rooms = pgTable('rooms', {
     }).defaultNow(),
     updatedAt: timestamp('updated_at', {
         withTimezone: true,
-    }).defaultNow().notNull().$onUpdate(() => new Date()),
+    }).defaultNow().$onUpdate(() => new Date()),
 });
 
 export const relationsUsers = pgTable('relations_users', {
@@ -47,7 +47,7 @@ export const relationsUsers = pgTable('relations_users', {
     status: FRIEND_STATUS_ENUM('friend_status').default("PENDING"),
     updatedAt: timestamp('updated_at', {
         withTimezone: true,
-    }).defaultNow().notNull().$onUpdate(() => new Date()),
+    }).defaultNow().$onUpdate(() => new Date()),
 });
 
 export const relationsGroups = pgTable('relations_groups', {

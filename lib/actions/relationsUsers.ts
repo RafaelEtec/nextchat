@@ -69,7 +69,7 @@ export const inviteByEmail = async (params: InviteByEmailParams) => {
         return {
             success: false,
             messageHeader: "Opa...",
-            message: "Error ao convidar",
+            message: "Error ao convidar: \n" + error,
         }
     }
 }
