@@ -9,28 +9,38 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from "@/component
 import { Input } from "@/components/ui/input";
 import { inviteByEmailSchema } from "@/lib/validations";
 import { Button } from "@/components/ui/button";
-import { findSolicitacoesById, inviteByEmail } from '@/lib/actions/relationsUsers';
+import { findAmigosById, findSolicitacoesById, inviteByEmail, respondInvite } from '@/lib/actions/relationsUsers';
 import { findUserByEmail } from '@/lib/actions/users';
 import { useSession } from 'next-auth/react';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import Solicitacoes from '@/components/Solicitacoes';
 
 const page = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isSending, setIsSending] = useState<boolean>(false);
   const [result, setResult] = useState<boolean | null>(null);
   const [message, setMessage] = useState<string>("");
+  const [messageHeader, setMessageHeader] = useState<string>("");
+  const [pageResult, setPageResult] = useState<boolean | null>(null);
+  const [pageMessage, setPageMessage] = useState<string>("");
+  const [pageMessageHeader, setPageMessageHeader] = useState<string>("");
   const {data: session} = useSession();
   const [foundUser, setFoundUser] = useState<User | null>(null);
   const [solicitacoes, setSolicitacoes] = useState<Solicitacao[] | null>(null);
+  const [amigos, setAmigos] = useState<User[] | null>(null);
 
   const fetchSolicitacoes = async () => {
     const result = await findSolicitacoesById(session?.user?.id!);
     setSolicitacoes(result);
   }
 
+  const fetchAmigos = async () => {
+    const result = await findAmigosById(session?.user?.id!);
+    setAmigos(result);
+  }
+
   useEffect(() => {
     fetchSolicitacoes();
+    fetchAmigos();
   }, [session?.user?.id]);
 
   const EmailForm = useForm<z.infer<typeof inviteByEmailSchema>>({
@@ -46,6 +56,7 @@ const page = () => {
     setFoundUser(null);
     if (values.email === session?.user?.email) {
       setResult(false);
+      setMessageHeader("Opa...");
       setMessage("Você não pode se convidar!");
       return;
     }
@@ -53,7 +64,8 @@ const page = () => {
     setIsLoading(true);
     const found = await findUserByEmail(values);
     setResult(found.success);
-    setMessage(found.message!);
+    setMessageHeader(found.messageHeader);
+    setMessage(found.message);
     setIsLoading(false);
     setFoundUser(found.data);
   }
@@ -68,7 +80,8 @@ const page = () => {
       friendId: foundUser.id,
     });
     setResult(result.success);
-    setMessage(result.message!);
+    setMessageHeader(result.messageHeader);
+    setMessage(result.message);
     setIsSending(false);
     clearSpaces();
     fetchSolicitacoes();
@@ -78,6 +91,17 @@ const page = () => {
     setFoundUser(null);
     EmailForm.setValue("email", "");
     EmailForm.setValue("friendId", "");
+  }
+
+  const handleInvite = async (friendId: string, action: string) => {
+    setIsSending(true);
+    const result = await respondInvite(session?.user?.id!, friendId, action);
+    setPageResult(result.success);
+    setPageMessageHeader(result.messageHeader);
+    setPageMessage(result.message);
+    setIsSending(false);
+    fetchSolicitacoes();
+    fetchAmigos();
   }
 
   return (
@@ -130,7 +154,7 @@ const page = () => {
             <div className='font-roboto'>
                 {result != null && (
                   <Alert className={`border-${result ? "google-lg-green" : "google-lg-yellow"}`}>
-                  <AlertTitle className={`flex flex-1 gap-2 text-${result ? "google-lg-green" : "google-lg-yellow"} font-roboto`}><img width={20} height={20} src={`${result ? "check_green.svg" : "question_yellow.svg"}`} alt={`${result ? "Boa!" : "Opa..."}`}/>{result ? "Boa!" : "Opa..."}</AlertTitle>
+                  <AlertTitle className={`flex flex-1 gap-2 text-${result ? "google-lg-green" : "google-lg-yellow"} font-roboto`}><img width={20} height={20} src={`${result ? "check_green.svg" : "question_yellow.svg"}`} alt={messageHeader}/>{messageHeader}</AlertTitle>
                   <AlertDescription className={`text-${result ? "google-lg-green" : "google-lg-yellow"} font-roboto`}>
                     {message}
                   </AlertDescription>
@@ -171,7 +195,24 @@ const page = () => {
             <h2 className="text-xl font-semibold text-google-grey font-roboto py-8">Solicitações</h2>
             <div className="w-auto flex flex-wrap justify-start">
               {solicitacoes.map((solicitacao, idx) => (
-                <Solicitacoes key={idx} user={solicitacao.user}/>
+                <div key={idx} className="flex space-x-2 justify-start space-y-4 pr-4">
+                  <img src={solicitacao.user.image} alt="Friend Avatar" className="h-20 w-20 rounded-full bg-google-black"/>
+                  <div>
+                    <p>{solicitacao.user.name}</p>
+                    <p>{solicitacao.user.email}</p>
+                    {solicitacao.status === "PENDING" && (
+                      <div className='justify-evenly flex space-x-5'>
+                        <Button onClick={() => handleInvite(solicitacao.friendId, "ACCEPT")}>
+                          <img src="user_confirm.svg" alt="Confirm user invite" width={30} height={30} className='cursor-pointer'/>
+                        </Button>
+                        <Button onClick={() => handleInvite(solicitacao.friendId, "DECLINE")}>
+                          <img src="user_decline.svg" alt="Decline user invite" width={30} height={30} className='cursor-pointer'/>
+                        </Button>
+                        {/* <img src="user_block.svg" alt="Block user invite" width={30} height={30} className='cursor-pointer'/> */}
+                      </div>
+                    )}
+                  </div>
+                </div>
               ))}
             </div>
           </>
@@ -180,16 +221,31 @@ const page = () => {
 
       <h2 className="text-xl font-semibold text-google-grey font-roboto pb-4 mt-4 lg:pb-8 lg:mt-4">Amigos</h2>
       <div className="w-auto flex flex-wrap justify-start">
-        {[...new Array(5)].map((i, idx) => (
-          <div key={"first-array-demo-1" + idx} className="flex space-x-2 justify-start space-y-2 pr-4">
-            <div className="h-20 w-20 animate-pulse rounded-full bg-google-black"></div>
-            <div className="space-y-2">
-              <div className="h-5 w-40 animate-pulse rounded-sm bg-google-black"></div>
-              <div className="h-5 w-20 animate-pulse rounded-sm bg-google-black"></div>
-            </div>
-          </div>
-        ))}
+        {amigos && (
+          <>
+            {amigos.map((amigo, idx) => (
+              <div key={idx} className="flex space-x-2 justify-start space-y-4 pr-4">
+                <img src={amigo?.image} alt="Friend Avatar" className="h-20 w-20 rounded-full bg-google-black"/>
+                <div>
+                  <p>{amigo.name}</p>
+                  <p>{amigo.email}</p>
+                </div>
+              </div>
+            ))}
+          </>
+        )}
       </div>
+
+      {pageResult != null && (
+        <div>
+          <Alert className={`border-${pageResult ? "google-lg-green" : "google-lg-yellow"}`}>
+          <AlertTitle className={`flex flex-1 gap-2 text-${pageResult ? "google-lg-green" : "google-lg-yellow"} font-roboto`}><img width={20} height={20} src={`${pageResult ? "check_green.svg" : "question_yellow.svg"}`} alt={pageMessageHeader}/>{pageMessageHeader}</AlertTitle>
+          <AlertDescription className={`text-${pageResult ? "google-lg-green" : "google-lg-yellow"} font-roboto`}>
+            {pageMessage}
+          </AlertDescription>
+          </Alert>
+        </div>
+      )}
     </section>
   )
 }
