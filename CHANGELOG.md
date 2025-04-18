@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.8](https://github.com/RafaelEtec/nextchat/compare/v0.1.7...v0.1.8) (2025-04-18)
+
+
+### Bug Fixes
+
+* sidebar grouplist now displays users actual groups ([68e6d25](https://github.com/RafaelEtec/nextchat/commit/68e6d25f576baa7e09217dd66fe60ff6e6f7e18a))
+
 ### [0.1.7](https://github.com/RafaelEtec/nextchat/compare/v0.1.6...v0.1.7) (2025-04-18)
 
 
