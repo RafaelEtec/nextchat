@@ -15,6 +15,34 @@
       "when": 1744815997451,
       "tag": "0001_friendly_toro",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1744922763247,
+      "tag": "0002_gorgeous_gwen_stacy",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1744940697613,
+      "tag": "0003_harsh_pandemic",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1744941604449,
+      "tag": "0004_lovely_ultimates",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1744942189738,
+      "tag": "0005_elite_spiral",
+      "breakpoints": true
     }
   ]
 }

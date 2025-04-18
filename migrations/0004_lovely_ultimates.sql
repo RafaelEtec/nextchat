@@ -1,0 +1,1 @@
+ALTER TABLE "relations_rooms" ADD COLUMN "role" "role" DEFAULT 'USER';
