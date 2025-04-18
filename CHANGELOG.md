@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.7](https://github.com/RafaelEtec/nextchat/compare/v0.1.6...v0.1.7) (2025-04-18)
+
+
+### Features
+
+* add group related functions ([9cf7749](https://github.com/RafaelEtec/nextchat/commit/9cf77495af0818dcf50bdc163e44065d8b8372d7))
+* add new svgs ([38f28de](https://github.com/RafaelEtec/nextchat/commit/38f28de8238e5f481e983c43285a8870fb683738))
+* fully working Group functions, can now create and add users to a group and chat rooms ([7c59258](https://github.com/RafaelEtec/nextchat/commit/7c592586d20571bfd052711a3b33f1301e946d8d))
+
+
+### Bug Fixes
+
+* db connection ([75bdbdc](https://github.com/RafaelEtec/nextchat/commit/75bdbdc918985b920bfe07d9853729292099f323))
+* db structure ([318ece9](https://github.com/RafaelEtec/nextchat/commit/318ece9803039cf6ed10e057caae2469a0d69014))
+* guarantee to receiving image ([ceb91ab](https://github.com/RafaelEtec/nextchat/commit/ceb91abe01adacbbaeb21994de600e73c88d14d3))
+
 ### [0.1.6](https://github.com/RafaelEtec/nextchat/compare/v0.1.5...v0.1.6) (2025-04-16)
 
 
