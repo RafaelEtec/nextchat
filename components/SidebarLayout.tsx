@@ -43,7 +43,7 @@ export default function SidebarLayout({
                     <SidebarGroupLink key={link.href} link={link} isOpen={open} />
                 ))}
               </div>
-              <div className="overflow-x-hidden overflow-y-auto no-scrollbar mt-4 p-2 border rounded-2xl border-my-background">
+              <div className="overflow-x-hidden overflow-y-auto no-scrollbar mt-4 p-2">
                 <LoadingGroups open={open} />
               </div>
             </div>
