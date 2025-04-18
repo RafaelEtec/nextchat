@@ -5,8 +5,8 @@ import React from 'react';
 
 const Page = () => {
   return (
-    <div className="flex flex-1 h-full">
-        <Loading />
+    <div className='flex flex-1 items-center justify-center'>
+      <Loading />
     </div>
   )
 }
