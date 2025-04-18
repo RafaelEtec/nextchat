@@ -61,7 +61,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           id: crypto.randomUUID(),
           name: user.name!,
           email: user.email!,
-          image: user.image,
+          image: user.image!,
         });
       } return true;
     },
