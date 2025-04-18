@@ -33,7 +33,7 @@ export const findUserByEmail = async (params: InviteByEmailParams) => {
         return {
             success: false,
             messageHeader: "Opa...",
-            message: "Erro ao encontrar usuário",
+            message: "Erro ao encontrar usuário: " + error,
         }
     }
 }

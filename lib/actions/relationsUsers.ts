@@ -205,7 +205,7 @@ export async function respondInvite(
         return {
             success: false,
             messageHeader: "Opa...",
-            message: "Erro ao enviar convite",
+            message: "Erro ao enviar convite: " + error,
         }
     }
 }

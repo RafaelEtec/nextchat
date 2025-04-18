@@ -6,6 +6,16 @@ interface User {
     createdAt: string;
 }
 
+interface Group {
+    id: string;
+    name: string;
+    description: string;
+    thumbnail: string;
+    createdAt: string;
+    updatedAt: string;
+    creatorId: string;
+}
+
 interface Solicitacao {
     userId: string;
     friendId: string;
@@ -17,4 +27,11 @@ interface InviteByEmailParams {
     email: string;
     userId: string;
     friendId: string;
+}
+
+interface CreateGroupParams {
+    name: string;
+    description: string;
+    thumbnail: string;
+    creatorId: string
 }

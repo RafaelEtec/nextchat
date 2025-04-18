@@ -135,7 +135,7 @@ const page = () => {
           </DialogTrigger>
           <DialogContent className={`${isSending ? "animate-pulse" : ""}`}>
             <DialogHeader>
-              <DialogTitle className="text-my-blue">Convide alguém pelo E-mail</DialogTitle>
+              <DialogTitle className="text-my-blue text-2xl">Convide alguém pelo E-mail</DialogTitle>
             </DialogHeader>
             <div className="flex items-center space-x-2">
               <div className="flex-1 gap-2 inline-flex">
@@ -152,7 +152,6 @@ const page = () => {
                               placeholder="fulano@nextchat.com"
                               {...field}
                               onClick={clearSpaces}
-                              className="book-form_input"
                             />
                           </FormControl>
                           <FormMessage />
@@ -184,7 +183,7 @@ const page = () => {
                 {foundUser && (
                   <>
                     <div key="foundUser" className="flex space-x-2 justify-start space-y-2 pr-4">
-                      <img src={foundUser.image} alt="Friend Avatar" className="h-20 w-20 rounded-full bg-google-black"/>
+                      <img src={foundUser.image} alt="" className="h-20 w-20 rounded-full bg-google-black"/>
                       <div>
                         <p>{foundUser.name}</p>
                         <p>{foundUser.email}</p>
@@ -195,7 +194,7 @@ const page = () => {
                         Convidar
                         <img src="adduser.svg" alt="Procurar" width={30} height={30}/>
                       </Button>
-                      <Button onClick={clearSpaces} type='submit' size="sm" className='flex-1 mt-1 border border-google-grey text-google-grey ml-2 h-10 cursor-pointer'>
+                      <Button onClick={clearSpaces} type='button' size="sm" className='flex-1 mt-1 border border-google-grey text-google-grey ml-2 h-10 cursor-pointer'>
                         Cancelar
                       </Button>
                     </div>
@@ -211,7 +210,7 @@ const page = () => {
             <div className="w-auto flex flex-wrap justify-start">
               {solicitacoes.map((solicitacao, idx) => (
                 <div key={idx} className="flex space-x-2 justify-start space-y-4 pr-4">
-                  <img src={solicitacao.user.image} alt="Friend Avatar" className="h-20 w-20 rounded-full bg-google-black"/>
+                  <img src={solicitacao.user.image} alt="" className="h-20 w-20 rounded-full bg-google-black"/>
                   <div>
                     <p>{solicitacao.user.name}</p>
                     <p>{solicitacao.user.email}</p>
@@ -240,7 +239,7 @@ const page = () => {
           <>
             {amigos.map((amigo, idx) => (
               <div key={idx} className="flex space-x-2 justify-start space-y-4 pr-4">
-                <img src={amigo?.image} alt="Friend Avatar" className="h-20 w-20 rounded-full bg-google-black"/>
+                <img src={amigo?.image} alt="" className="h-20 w-20 rounded-full bg-google-black"/>
                 <div>
                   <p>{amigo.name}</p>
                   <p>{amigo.email}</p>

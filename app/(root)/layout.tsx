@@ -10,9 +10,9 @@ const Layout = async ({ children }: { children: ReactNode }) => {
 
   return (
     <main>
-        <SidebarLayout>
-            {children}
-        </SidebarLayout>
+      <SidebarLayout>
+        {children}
+      </SidebarLayout>
     </main>
   );
 };

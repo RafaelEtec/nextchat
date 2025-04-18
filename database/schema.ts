@@ -4,6 +4,7 @@ import { access } from 'fs';
 //export const STATUS_ENUM = pgEnum('status', ['OFFLINE', 'ONLINE']);
 export const FRIEND_STATUS_ENUM = pgEnum('friend_status', ['PENDING', 'ACCEPTED', 'WAITING']);
 export const ROLE_ENUM = pgEnum('role', ['USER', 'ADMIN']);
+export const ACCESS_ENUM = pgEnum('access', ['USER', 'ADMIN']);
 
 export const users = pgTable('users', {
     id: uuid('id').primaryKey(),
@@ -26,12 +27,14 @@ export const groups = pgTable('groups', {
     updatedAt: timestamp('updated_at', {
         withTimezone: true,
     }).defaultNow().$onUpdate(() => new Date()),
+    creatorId: uuid('creator_id').notNull().references(() => users.id),
 });
 
 export const rooms = pgTable('rooms', {
     id: uuid('id').primaryKey().defaultRandom(),
     name: text('name').notNull(),
     description: text('description'),
+    access: ACCESS_ENUM('access').default("USER"),
     createdAt: timestamp('created_at', {
         withTimezone: true,
     }).defaultNow(),
@@ -61,7 +64,7 @@ export const relationsRooms = pgTable('relations_rooms', {
     id: uuid('id').primaryKey().defaultRandom(),
     userId: uuid('user_id').notNull().references(() => users.id),
     roomId: uuid('room_id').notNull().references(() => rooms.id),
-    access: ROLE_ENUM('access').default("USER"),
+    access: ACCESS_ENUM('access').default("USER"),
 });
 
 

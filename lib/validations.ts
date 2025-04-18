@@ -6,9 +6,15 @@ export const inviteByEmailSchema = z.object({
   friendId: z.string(),
 });
 
-export const inviteByTagSchema = z.object({
-  tag: z.string().nonempty("É necessário informar a Tag"),
+export const createGroupSchema = z.object({
+  name: z.string().trim().min(2).max(100),
+  description: z.string().trim().min(10).max(1000),
+  thumbnail: z.string().nonempty("É necessário informar a imagem do grupo"),
 });
+
+// export const inviteByTagSchema = z.object({
+//   tag: z.string().nonempty("É necessário informar a Tag"),
+// });
 
 // export const roomSchema = z.object({
 //   title: z.string().trim().min(2).max(100),
