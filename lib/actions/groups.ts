@@ -1,6 +1,6 @@
 "use server";
 
-import { groups } from "@/database/schema";
+import { groups, relationsGroups } from "@/database/schema";
 import { db } from "@/database/drizzle";
 import { and, eq, is, or } from "drizzle-orm";
 
@@ -65,6 +65,48 @@ export const findGroupsByUserId = async (id: string) => {
             return null;
         }
 
+        return JSON.parse(JSON.stringify(groupsList));
+    } catch (error) {
+        console.log(error);
+        return {
+            success: false,
+            messageHeader: "Opa...",
+            message: "Error ao encontrar grupos: \n" + error,
+        }
+    }
+}
+
+export const findAllGroupsByUserId = async (id: string) => {
+    try {
+        const participations = await db
+        .select()
+        .from(relationsGroups)
+        .where(
+            eq(relationsGroups.userId, id as string),
+        );
+
+        if (participations.length === 0) {
+            return null;
+        }
+
+        let groupsList = [];
+        for (let participation of participations) {
+            const group = await db
+            .select({
+                id: groups.id,
+                name: groups.name,
+                description: groups.description,
+                thumbnail: groups.thumbnail,
+                createdAt: groups.createdAt,
+                updatedAt: groups.updatedAt,
+                creatorId: groups.creatorId,
+            })
+            .from(groups)
+            .where(
+                eq(groups.id, participations[0].groupId as string),
+            )
+            groupsList.push(group[0]);
+        }
         return JSON.parse(JSON.stringify(groupsList));
     } catch (error) {
         console.log(error);

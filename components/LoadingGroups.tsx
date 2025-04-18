@@ -1,4 +1,4 @@
-import { findGroupsByUserId } from "@/lib/actions/groups";
+import { findAllGroupsByUserId } from "@/lib/actions/groups";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
@@ -10,13 +10,13 @@ const LoadingGroups = ({
     const {data: session} = useSession();
     const [myGroups, setMyGroups] = useState<Group[] | null>(null);
 
-    const fetchGroupsByUserId = async () => {
-        const result = await findGroupsByUserId(session?.user?.id!);
+    const fetchAllGroupsByUserId = async () => {
+        const result = await findAllGroupsByUserId(session?.user?.id!);
         setMyGroups(result);
     }
 
     useEffect(() => {
-    fetchGroupsByUserId();
+        fetchAllGroupsByUserId();
     }, [session?.user?.id]);
     return (
         <div className="flex flex-col gap-2 items-start">
