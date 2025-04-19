@@ -113,7 +113,7 @@ const page = () => {
               className="contain-content border-my-blue rounded-2xl cursor-pointer"
             >
               Criar grupo
-              <img width={36} height={36} src="add.svg" alt="Add group"/>
+              <img width={36} height={36} src="/icons/add.svg" alt="Add group"/>
             </Button>
           </DialogTrigger>
           <DialogContent className={`${isCreating ? "animate-pulse" : ""}`}>
@@ -174,7 +174,7 @@ const page = () => {
 
                     <div className='flex items-center justify-between'>
                       <h2 className="text-xl font-semibold text-my-blue font-roboto pb-4 mt-4 lg:pb-8 lg:mt-4">Amigos</h2>
-                      <img onClick={fetchAmigos} src="refresh.svg" alt="Atualizar lista de amigos" width={36} height={36} className='cursor-pointer'/>
+                      <img onClick={fetchAmigos} src="/icons/refresh.svg" alt="Atualizar lista de amigos" width={36} height={36} className='cursor-pointer'/>
                     </div>
                     <div className="pt-2 lg:pt-0">
                       {amigos && (
@@ -200,7 +200,7 @@ const page = () => {
                     <div className='w-full flex items-center pt-8'>
                       <Button onClick={GroupForm.handleSubmit(onSubmitCreateGroup)} type='submit' size="sm" className='flex-1/4 mt-1 border border-my-blue text-my-blue h-10 cursor-pointer'>
                         Criar
-                        <img src="create_group.svg" alt="Procurar" width={30} height={30}/>
+                        <img src="/icons/create_group.svg" alt="Procurar" width={30} height={30}/>
                       </Button>
                       <Button onClick={clearSpaces} type='button' size="sm" className='flex-1 mt-1 border border-google-grey text-google-grey ml-2 h-10 cursor-pointer'>
                         Cancelar

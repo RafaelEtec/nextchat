@@ -13,12 +13,12 @@ import SidebarFooter from "@/components/SidebarFooter";
 import LoadingGroups from "@/components/LoadingGroups";
 import { sidebarLinks } from "@/data";
 import { cn } from "@/lib/utils";
-import React from "react";
+import { ReactNode } from "react";
 
 export default function SidebarLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   const { open, setOpen } = useChatStore();
 

@@ -8,7 +8,7 @@ import React, { createContext, useContext, useState } from "react";
 interface Links {
   label: string;
   href: string;
-  icon: React.JSX.Element | React.ReactNode;
+  icon: string;
 }
 
 interface SidebarContextProps {
@@ -222,7 +222,7 @@ export const SidebarGroupLink = ({
       )}
       {...props}
     >
-      <img width={30} height={30} src={link.icon?.toString()} alt={link.label} />
+      <img width={30} height={30} src={"/icons/"+link.icon} alt={link.label} />
 
       <motion.span
         animate={{

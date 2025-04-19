@@ -9,7 +9,15 @@ const nextConfig: NextConfig = {
         hostname: 'avatars.githubusercontent.com',
       },
       {
+        protocol: 'http',
+        hostname: 'avatars.githubusercontent.com',
+      },
+      {
         protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
+      },
+      {
+        protocol: 'http',
         hostname: 'lh3.googleusercontent.com',
       },
       {

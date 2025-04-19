@@ -130,7 +130,7 @@ const page = () => {
               className="contain-content border-my-blue rounded-2xl cursor-pointer"
             >
               Convidar Amigos
-              <img width={36} height={36} src="add.svg" alt="Add user"/>
+              <img width={36} height={36} src="/icons/add.svg" alt="Add user"/>
             </Button>
           </DialogTrigger>
           <DialogContent className={`${isSending ? "animate-pulse" : ""}`}>
@@ -160,7 +160,7 @@ const page = () => {
                     />
                   </form>
                   <Button onClick={EmailForm.handleSubmit(onSubmitFindUserByEmail)} type='submit' size="sm" className='mt-1 cursor-pointer'>
-                    <img src="magnifier.svg" alt="Procurar" width={30} height={30}/>
+                    <img src="/icons/magnifier.svg" alt="Procurar" width={30} height={30}/>
                   </Button>
                 </Form>
               </div>
@@ -168,7 +168,7 @@ const page = () => {
             <div className='font-roboto'>
                 {isVisible && result != null && (
                   <Alert className={`border-${result ? "google-lg-green" : "google-lg-yellow"}`}>
-                  <AlertTitle className={`flex flex-1 gap-2 text-${result ? "google-lg-green" : "google-lg-yellow"} font-roboto`}><img width={20} height={20} src={`${result ? "check_green.svg" : "question_yellow.svg"}`} alt={messageHeader}/>{messageHeader}</AlertTitle>
+                  <AlertTitle className={`flex flex-1 gap-2 text-${result ? "google-lg-green" : "google-lg-yellow"} font-roboto`}><img width={20} height={20} src={`${result ? "/icons/check_green.svg" : "/icons/question_yellow.svg"}`} alt={messageHeader}/>{messageHeader}</AlertTitle>
                   <AlertDescription className={`text-${result ? "google-lg-green" : "google-lg-yellow"} font-roboto`}>
                     {message}
                   </AlertDescription>
@@ -177,7 +177,7 @@ const page = () => {
 
                 {isLoading && (
                   <div className='flex items-center justify-center'>
-                    <img src="loading.svg" alt="loading" width={100} height={100} className='animate-spin'/>
+                    <img src="/icons/loading.svg" alt="loading" width={100} height={100} className='animate-spin'/>
                   </div>
                 )}
                 {foundUser && (
@@ -192,7 +192,7 @@ const page = () => {
                     <div className='w-full flex items-center'>
                       <Button onClick={EmailForm.handleSubmit(onSubmitInviteByEmail)} type='submit' size="sm" className='flex-1/4 mt-1 border border-my-blue text-my-blue h-10 cursor-pointer'>
                         Convidar
-                        <img src="adduser.svg" alt="Procurar" width={30} height={30}/>
+                        <img src="/icons/adduser.svg" alt="Procurar" width={30} height={30}/>
                       </Button>
                       <Button onClick={clearSpaces} type='button' size="sm" className='flex-1 mt-1 border border-google-grey text-google-grey ml-2 h-10 cursor-pointer'>
                         Cancelar
@@ -217,12 +217,12 @@ const page = () => {
                     {solicitacao.status === "PENDING" && (
                       <div className='justify-evenly flex space-x-5'>
                         <Button onClick={() => handleInvite(solicitacao.friendId, "ACCEPT")}>
-                          <img src="user_confirm.svg" alt="Confirm user invite" width={30} height={30} className='cursor-pointer'/>
+                          <img src="/icons/user_confirm.svg" alt="Confirm user invite" width={30} height={30} className='cursor-pointer'/>
                         </Button>
                         <Button onClick={() => handleInvite(solicitacao.friendId, "DECLINE")}>
-                          <img src="user_decline.svg" alt="Decline user invite" width={30} height={30} className='cursor-pointer'/>
+                          <img src="/icons/user_decline.svg" alt="Decline user invite" width={30} height={30} className='cursor-pointer'/>
                         </Button>
-                        {/* <img src="user_block.svg" alt="Block user invite" width={30} height={30} className='cursor-pointer'/> */}
+                        {/* <img src="/icons/user_block.svg" alt="Block user invite" width={30} height={30} className='cursor-pointer'/> */}
                       </div>
                     )}
                   </div>
@@ -253,10 +253,12 @@ const page = () => {
       {pageResult != null && (
         <div>
           <Alert className={`border-${pageResult ? "google-lg-green" : "google-lg-yellow"}`}>
-          <AlertTitle className={`flex flex-1 gap-2 text-${pageResult ? "google-lg-green" : "google-lg-yellow"} font-roboto`}><img width={20} height={20} src={`${pageResult ? "check_green.svg" : "question_yellow.svg"}`} alt={pageMessageHeader}/>{pageMessageHeader}</AlertTitle>
-          <AlertDescription className={`text-${pageResult ? "google-lg-green" : "google-lg-yellow"} font-roboto`}>
-            {pageMessage}
-          </AlertDescription>
+            <AlertTitle className={`flex flex-1 gap-2 text-${pageResult ? "google-lg-green" : "google-lg-yellow"} font-roboto`}>
+              <img width={20} height={20} src={`${pageResult ? "/icons/check_green.svg" : "/icons/question_yellow.svg"}`} alt={pageMessageHeader}/>{pageMessageHeader}
+            </AlertTitle>
+            <AlertDescription className={`text-${pageResult ? "google-lg-green" : "google-lg-yellow"} font-roboto`}>
+              {pageMessage}
+            </AlertDescription>
           </Alert>
         </div>
       )}

@@ -1,5 +1,6 @@
 import { findAllGroupsByUserId } from "@/lib/actions/groups";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const LoadingGroups = ({
@@ -23,16 +24,18 @@ const LoadingGroups = ({
             {myGroups &&
                 open ? (
                     myGroups?.map((group, idx) => (
-                        <div key={"first-array-demo-1" + idx} className="flex flex-1 space-x-2 justify-start">
-                            <img src={group.thumbnail} alt="" className="h-20 w-20 rounded-full"/>
-                            <div className="space-y-2">
-                                <p className="font-bebas-neue text-xl">{group.name}</p>
+                        <Link href={`/groups/${group.id}`} key={"grouphrefopen" + idx}>
+                            <div className="flex flex-1 space-x-2 justify-start transition-all duration-300 ease-in-out">
+                                <img src={group.thumbnail} alt="" className="h-20 w-20 rounded-full hover:border-my-blue hover:ring-4 hover:ring-my-blue hover:scale-105 transition-all duration-300 ease-in-out hover:scale-110"/>
+                                <div className="space-y-2">
+                                    <p className="font-bebas-neue text-xl">{group.name}</p>
+                                </div>
                             </div>
-                        </div>
+                        </Link>
                     ))
                 ) : (
                     myGroups?.map((group, idx) => (
-                        <div key={"first-array-demo-1" + idx} className="flex flex-1 justify-start">
+                        <div key={"grouphrefclosed" + idx} className="flex flex-1 justify-start">
                             <img src={group.thumbnail} alt="" className="h-20 w-20 rounded-full"/>
                         </div>
                     ))

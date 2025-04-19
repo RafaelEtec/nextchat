@@ -16,7 +16,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       clientSecret: config.env.github.clientSecret!,
       authorization: {
         params: {
-          prompt: "consent",
+          prompt: "select_account",
         },
       },
     }),

@@ -44,6 +44,34 @@ export const createGroup = async (params: CreateGroupParams) => {
     }
 }
 
+export const getGroupById = async (id: string) => {
+    try {
+        const group = await db
+        .select({
+            id: groups.id,
+            name: groups.name,
+            description: groups.description,
+            thumbnail: groups.thumbnail,
+            createdAt: groups.createdAt,
+            updatedAt: groups.updatedAt,
+            creatorId: groups.creatorId,
+        })
+        .from(groups)
+        .where(
+            eq(groups.id, id as string),
+        )
+        if (group.length === 0) {return null;}
+        return JSON.parse(JSON.stringify(group[0]));
+    } catch (error) {
+        console.log(error);
+        return {
+            success: false,
+            messageHeader: "Opa...",
+            message: "Error ao encontrar grupo: \n" + error,
+        }
+    }
+}
+
 export const findGroupsByUserId = async (id: string) => {
     try {
         const groupsList = await db
@@ -103,7 +131,7 @@ export const findAllGroupsByUserId = async (id: string) => {
             })
             .from(groups)
             .where(
-                eq(groups.id, participations[0].groupId as string),
+                eq(groups.id, participation.groupId as string),
             )
             groupsList.push(group[0]);
         }
