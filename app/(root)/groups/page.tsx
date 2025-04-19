@@ -17,6 +17,7 @@ import { createGroup, findGroupsByUserId } from '@/lib/actions/groups';
 import { addUsersToGroup } from '@/lib/actions/relationsGroups';
 import { createRoom } from '@/lib/actions/rooms';
 import { addUsersToRoom } from '@/lib/actions/relationsRooms';
+import { redirect } from 'next/navigation';
 
 const page = () => {
   const {data: session} = useSession();
@@ -83,6 +84,8 @@ const page = () => {
 
     setIsCreating(false);
     clearSpaces();
+    fetchGroupsByUserId();
+    redirect(`/groups/${group.id}`);
   }
 
   const addToParticipantes = (amigo: User) => () => {

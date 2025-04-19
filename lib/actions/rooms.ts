@@ -45,3 +45,39 @@ export async function createRoom(
         }
     }
 }
+
+export async function getRoomsByGroupId(groupId: string) {
+    try {
+        if (!groupId) { throw new Error("groupId é obrigatório.");}
+
+        const roomsList = await db
+        .select()
+        .from(rooms)
+        .where(
+            and(
+                eq(rooms.id, groupId as string),
+                or(
+                    eq(rooms.access, "USER"),
+                    eq(rooms.access, "ADMIN"),
+                )
+            )
+        );
+
+        if (!roomsList) {
+            return {
+                success: false,
+                messageHeader: "Opa...",
+                message: "Error ao buscar salas",
+            }
+        }
+
+        return JSON.parse(JSON.stringify(roomsList));
+    } catch (error) {
+        console.log(error);
+        return {
+            success: false,
+            messageHeader: "Opa...",
+            message: "Error ao buscar salas: " + error,
+        }
+    }
+}

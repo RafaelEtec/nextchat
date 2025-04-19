@@ -16,6 +16,16 @@ interface Group {
     creatorId: string;
 }
 
+interface Room {
+    id: string;
+    name: string;
+    description: string;
+    access: string;
+    groupId: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
 interface Solicitacao {
     userId: string;
     friendId: string;
