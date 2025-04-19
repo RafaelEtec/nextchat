@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.10](https://github.com/RafaelEtec/nextchat/compare/v0.1.9...v0.1.10) (2025-04-19)
+
+
+### Features
+
+* visualize respective chat rooms ([631f23a](https://github.com/RafaelEtec/nextchat/commit/631f23a4cabcbd709b31fd7ecc35bafbc498bfc1))
+
+
+### Bug Fixes
+
+* images and icons are now on their own directory ([da686b2](https://github.com/RafaelEtec/nextchat/commit/da686b2d7526e9d25b4f2ffcc2823fa222abc5e4))
+* removed unecessary button ([fb998c7](https://github.com/RafaelEtec/nextchat/commit/fb998c7099c737e3601f0db0d8934882a720eb12))
+
 ### [0.1.9](https://github.com/RafaelEtec/nextchat/compare/v0.1.8...v0.1.9) (2025-04-18)
 
 ### [0.1.8](https://github.com/RafaelEtec/nextchat/compare/v0.1.7...v0.1.8) (2025-04-18)
