@@ -26,6 +26,22 @@ interface Room {
     updatedAt: string;
 }
 
+interface Message {
+    id: string;
+    content: string;
+    createdAt: string;
+    user?: {
+      id: string;
+      name: string;
+      image: string;
+    };
+}
+
+interface MessageBubbleProps {
+    msg: Message;
+    currentUserId: string;
+}
+
 interface Solicitacao {
     userId: string;
     friendId: string;

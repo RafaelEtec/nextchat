@@ -43,6 +43,18 @@ export const rooms = pgTable('rooms', {
     }).defaultNow().$onUpdate(() => new Date()),
 });
 
+export const messages = pgTable('messages', {
+    id: uuid('id').primaryKey().defaultRandom(),
+    content: text('content').notNull(),
+    createdAt: timestamp('created_at', {
+      withTimezone: true,
+    }).defaultNow(),
+    userId: uuid('user_id').notNull().references(() => users.id),
+    roomId: uuid('room_id').notNull().references(() => rooms.id),
+});
+export type InsertMessage = typeof messages.$inferInsert;
+export type SelectMessage = typeof messages.$inferSelect;
+
 export const relationsUsers = pgTable('relations_users', {
     id: uuid('id').primaryKey().defaultRandom(),
     userId: uuid('user_id').notNull().references(() => users.id),
@@ -67,6 +79,18 @@ export const relationsRooms = pgTable('relations_rooms', {
     access: ACCESS_ENUM('access').default("USER"),
 });
 
+export const schema = {
+    users,
+    rooms,
+    messages,
+    groups,
+    relationsRooms,
+    relationsGroups,
+    relationsUsers,
+    FRIEND_STATUS_ENUM,
+    ROLE_ENUM,
+    ACCESS_ENUM,
+}
 
 // export const postsTable = pgTable('posts_table', {
 //   id: serial('id').primaryKey(),
