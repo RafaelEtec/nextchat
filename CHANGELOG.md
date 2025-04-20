@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0](https://github.com/RafaelEtec/nextchat/compare/v0.1.10...v1.0.0) (2025-04-20)
+
+
+### Features
+
+* add messages to db ([4a0952f](https://github.com/RafaelEtec/nextchat/commit/4a0952f8f6255f002b10f3b9b62940e8682f3c42))
+* can now send and receive messages ([22d8ea9](https://github.com/RafaelEtec/nextchat/commit/22d8ea90e95c66338a47d3f0715e14a566394b64))
+* pckgs for frontend ([035c22c](https://github.com/RafaelEtec/nextchat/commit/035c22c5fa2ca49ca0c89e2e69c31b29e22cb509))
+
+
+### Bug Fixes
+
+* remove unused component ([b5ac0ef](https://github.com/RafaelEtec/nextchat/commit/b5ac0ef1677b8b7081926860285f8e07cefc8837))
+
 ### [0.1.10](https://github.com/RafaelEtec/nextchat/compare/v0.1.9...v0.1.10) (2025-04-19)
 
 
