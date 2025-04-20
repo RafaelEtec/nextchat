@@ -5,25 +5,27 @@ import { Menu, X } from "lucide-react";
 import { getRoomsByGroupId } from "@/lib/actions/rooms";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const ClientGroupLayout = ({ group, children }: { group: any, children: React.ReactNode }) => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [rooms, setRooms] = useState<Room[] | null>(null);
+  const {data: session} = useSession();
 
   const fetchRooms = async () => {
     const result = await getRoomsByGroupId(group.id);
     setRooms(result);
-    redirect(`/groups/${group.id}/rooms/${result[0].id}`);
+    redirect(`/groups/${group.id}/rooms/${result[0].id}`)
   }
 
   useEffect(() => {
-      fetchRooms();
-    }, [group.id]);
+    fetchRooms();
+  }, [session?.user?.id]);
 
   return (
-    <section className="relative flex flex-1 h-full font-roboto">
+    <section className="flex h-screen overflow-hidden font-roboto">
       <button
-        className="absolute top-4 right-4 z-30 md:hidden p-2 text-white bg-zinc-800 rounded-md"
+        className="absolute z-30 md:hidden p-2 text-white bg-zinc-800 rounded-md"
         onClick={() => setSidebarOpen(!isSidebarOpen)}
       >
         {isSidebarOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -62,7 +64,7 @@ const ClientGroupLayout = ({ group, children }: { group: any, children: React.Re
 
       </aside>
 
-      <div className="flex-1 overflow-y-auto p-6 md:ml-0">
+      <div className="flex flex-col flex-1">
         {children}
       </div>
     </section>
