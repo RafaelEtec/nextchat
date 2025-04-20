@@ -62,7 +62,7 @@ export default function ChatPage() {
   };
 
   return (
-    <div className="flex flex-col h-full w-full">
+    <div className="flex flex-col h-full w-full font-roboto">
       <div className="flex-1 overflow-y-auto px-4 py-2 flex flex-col space-y-2">
         {messages.map((msg, i) => {
           const isOwn = msg.user?.id === session?.user?.id;
@@ -104,9 +104,9 @@ export default function ChatPage() {
         />
         <button
           type="submit"
-          className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-full text-white"
+          className="rounded-full text-white cursor-pointer"
         >
-          Enviar
+          <img src="/icons/enviar.svg" alt="enviar" width={40} height={40} />
         </button>
       </form>
     </div>
