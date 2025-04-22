@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/RafaelEtec/nextchat/compare/v1.0.1...v1.1.0) (2025-04-22)
+
+
+### Features
+
+* loading skeleton b4 showing room messages ([23f86d9](https://github.com/RafaelEtec/nextchat/commit/23f86d97c5f8ff708919e46da084f1e6ad7c7e6b))
+
 ### [1.0.1](https://github.com/RafaelEtec/nextchat/compare/v1.0.0...v1.0.1) (2025-04-20)
 
 ## [1.0.0](https://github.com/RafaelEtec/nextchat/compare/v0.1.10...v1.0.0) (2025-04-20)
