@@ -76,7 +76,7 @@ export default function ChatPage() {
                   {msg.user?.image && (
                     <img
                       src={msg.user.image}
-                      alt={msg.user.name}
+                      alt=""
                       className="w-6 h-6 rounded-full"
                     />
                   )}
