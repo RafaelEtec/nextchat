@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/RafaelEtec/nextchat/compare/v1.1.0...v1.2.0) (2025-04-25)
+
+
+### Features
+
+* add 'user is typing...' with Pusher ([b125a94](https://github.com/RafaelEtec/nextchat/commit/b125a94a0cc01b288bdf8f378d5667dcb7ca12e7))
+
 ## [1.1.0](https://github.com/RafaelEtec/nextchat/compare/v1.0.1...v1.1.0) (2025-04-22)
 
 
