@@ -54,7 +54,3 @@ And much more, including full responsiveness and a seamless real-time experience
 🧪 Automated testing
 
 💡 Add features like reactions and read status
-
-## 💡 Inspiração
-
-- [Discord](https://discord.com/)
