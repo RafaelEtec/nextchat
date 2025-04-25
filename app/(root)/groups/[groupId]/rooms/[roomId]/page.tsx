@@ -5,6 +5,7 @@ import Pusher from 'pusher-js';
 import config from "@/lib/config";
 import { useSession } from 'next-auth/react';
 import { useParams } from 'next/navigation';
+import debounce from 'lodash/debounce';
 
 export default function ChatPage() {
   const { roomId } = useParams();
@@ -12,6 +13,8 @@ export default function ChatPage() {
   const [messages, setMessages] = useState<Message[]>([]);
   const { data: session } = useSession();
   const bottomRef = useRef<HTMLDivElement>(null);
+  const [typingUser, setTypingUser] = useState<string | null>(null);
+  let typingTimeout: NodeJS.Timeout;
 
   useEffect(() => {
     const loadMessages = async () => {
@@ -28,6 +31,17 @@ export default function ChatPage() {
     const channel = pusher.subscribe(`room-${roomId}`);
     channel.bind('new-message', (data: any) => {
       setMessages((prev) => [...prev, data]);
+    });
+
+    channel.bind('typing', (data: any) => {
+      if (data.user.id !== session?.user?.id) {
+        setTypingUser(data.user.name);
+
+        clearTimeout(typingTimeout);
+        typingTimeout = setTimeout(() => {
+          setTypingUser(null);
+        }, 3000);
+      }
     });
 
     return () => {
@@ -61,6 +75,20 @@ export default function ChatPage() {
     }
   };
 
+  const emitTypingEvent = async () => {
+    try {
+      await fetch('/api/typing', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ roomId }),
+      });
+    } catch (err) {
+      console.error('Erro ao emitir typing:', err);
+    }
+  };
+
+  const handleTyping = debounce(emitTypingEvent, 1000);
+
   return (
     <div className="flex flex-col h-full w-full font-roboto">
       <div className="flex-1 overflow-y-auto px-4 py-2 flex flex-col space-y-2">
@@ -91,6 +119,12 @@ export default function ChatPage() {
         })}
       </div>
 
+      {typingUser && (
+        <div className="text-sm text-gray-400 italic px-2">
+          {typingUser} está digitando...
+        </div>
+      )}
+
       <form
         onSubmit={handleSubmit}
         className="w-full p-4 flex items-center gap-2 border-t border-zinc-700 bg-zinc-900"
@@ -99,7 +133,10 @@ export default function ChatPage() {
           type="text"
           className="flex-grow p-2 pl-4 rounded-full bg-zinc-800 text-white outline-none"
           value={message}
-          onChange={(e) => setMessage(e.target.value)}
+          onChange={(e) => {
+            setMessage(e.target.value);
+            handleTyping();
+          }}
           placeholder="Digite sua mensagem..."
         />
         <button
