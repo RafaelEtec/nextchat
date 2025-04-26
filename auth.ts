@@ -5,6 +5,8 @@ import config from "./lib/config";
 import { db } from "@/database/drizzle";
 import { users } from "@/database/schema";
 import { eq } from "drizzle-orm";
+import axios from "axios";
+import { imagekit } from "@/lib/imagekit";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   session: {
@@ -57,13 +59,32 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         .where(eq(users.email, user.email!));
 
       if (existingUser.length === 0) {
+        let uploadedImageUrl = user.image!;
+
+        try {
+          const response = await axios.get(user.image!, { responseType: "arraybuffer" });
+          const imageBuffer = Buffer.from(response.data, "binary");
+
+          const uploadResponse = await imagekit.upload({
+            file: imageBuffer,
+            fileName: `${user.name}-profile.jpg`,
+            folder: "/profiles/",
+          });
+
+          uploadedImageUrl = uploadResponse.url;
+        } catch (error) {
+          console.error("Erro ao fazer upload da imagem no ImageKit:", error);
+        }
+
         await db.insert(users).values({
           id: crypto.randomUUID(),
           name: user.name!,
           email: user.email!,
-          image: user.image!,
+          image: uploadedImageUrl,
         });
-      } return true;
-    },
+      }
+
+      return true;
+    }
   },
 })
