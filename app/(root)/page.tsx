@@ -9,7 +9,7 @@ const Home = () => {
   const readmeContent = fs.readFileSync(readmePath, 'utf-8');
 
   return (
-    <section className="w-full rounded-2xl p-11 bg-google-grey dark:bg-my-background">
+    <section className="w-full rounded-2xl p-11">
       {/* <div className="flex flex-wrap items-center justify-between gap-2">
         <h2 className="text-xl font-semibold font-roboto">Changelogs</h2>
       </div> */}
